@@ -6,10 +6,9 @@ public class Book {
 	
 	private String book_id; //pk, isbn ÀÌ¿כ
 	private String title;
-	private String Author;
 	private String publisher;
-	private String rentaluser_id;
-	private String reserve_id;
+	private User rental_User;
+	private User reserve_User;
 	private String rental_date;
 	private String receive_date;
 	private int overdue;
@@ -18,11 +17,10 @@ public class Book {
 		super();
 	}
 	
-	public Book(String book_id, String title, String author, String publisher) {
+	public Book(String book_id, String title, String publisher) {
 		super();
 		this.book_id = book_id;
 		this.title = title;
-		Author = author;
 		this.publisher = publisher;
 	}
 
@@ -42,14 +40,6 @@ public class Book {
 		this.title = title;
 	}
 
-	public String getAuthor() {
-		return Author;
-	}
-
-	public void setAuthor(String author) {
-		Author = author;
-	}
-
 	public String getPublisher() {
 		return publisher;
 	}
@@ -58,20 +48,20 @@ public class Book {
 		this.publisher = publisher;
 	}
 
-	public String getRentaluser_id() {
-		return rentaluser_id;
+	public User getRental_User() {
+		return rental_User;
 	}
 
-	public void setRentaluser_id(String rentaluser_id) {
-		this.rentaluser_id = rentaluser_id;
+	public void setRental_User(User rental_User) {
+		this.rental_User = rental_User;
 	}
 
-	public String getReserve_id() {
-		return reserve_id;
+	public User getReserve_User() {
+		return reserve_User;
 	}
 
-	public void setReserve_id(String reserve_id) {
-		this.reserve_id = reserve_id;
+	public void setReserve_User(User reserve_User) {
+		this.reserve_User = reserve_User;
 	}
 
 	public String getRental_date() {
@@ -97,7 +87,7 @@ public class Book {
 	public void setOverdue(int overdue) {
 		this.overdue = overdue;
 	}
-	
+
 	
 	
 	

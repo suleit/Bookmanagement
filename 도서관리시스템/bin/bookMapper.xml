@@ -1,1 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="management.userDAO.BookMapper">
+	<resultMap type="management.vo.Book"
+		id="bookResultMap">
+		<result property="" column="string" />
+		
+		<association property="User" javaType="management.vo.User">
+			<result property="user_id" column="user_id"/>
+		</association>
+	</resultMap>
+	<select id="selectTest" resultMap="testTableResultMap"> 
+	select b.book_id, b.title, b.publisher, 
+	f.name as "rentaluser_name", s.name as "reserve_name", 
+	r.rental_date, r.receive_date, r.overdue_date
+	 from book b 
+	 join rental r on b.book_id=r.book_id 
+ 	 join bookuser f on r.rentalUser_id=f.user_id 
+	 join bookuser s on r.reserve_id=s.user_id
+	
+	</select>
+</mapper>

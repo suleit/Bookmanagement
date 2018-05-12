@@ -24,7 +24,7 @@ public class Login extends JFrame implements ActionListener{
 	private JButton btn_ok, btn_cancel;
 
 	public Login() {
-		super("Chat Login");
+		super("SCIT 도서관리프로그램");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -68,9 +68,6 @@ public class Login extends JFrame implements ActionListener{
 
 	}
 
-	public static void main(String[] args) {
-		Login login = new Login();
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
