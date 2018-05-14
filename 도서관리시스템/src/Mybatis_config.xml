@@ -7,6 +7,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<typeAliases>
 		<typeAlias type="management.vo.Book" alias="Book"/>
 		<typeAlias type="management.vo.User" alias="User"/>
+		<typeAlias type="management.vo.DBvo" alias="DBvo"/>
 	</typeAliases>
 	
 	<environments default="development">

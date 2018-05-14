@@ -4,13 +4,14 @@ import java.sql.Date;
 
 public class Book {
 	
+	private String bookrental_id; // rental table pk;
 	private String book_id; //pk, isbn ÀÌ¿כ
 	private String title;
 	private String publisher;
-	private User rental_User;
-	private User reserve_User;
 	private String rental_date;
 	private String receive_date;
+	private String rental_name;
+	private String reserve_name;
 	private int overdue;
 	
 	public Book() {
@@ -22,6 +23,14 @@ public class Book {
 		this.book_id = book_id;
 		this.title = title;
 		this.publisher = publisher;
+	}
+
+	public String getBookrental_id() {
+		return bookrental_id;
+	}
+
+	public void setBookrental_id(String bookrental_id) {
+		this.bookrental_id = bookrental_id;
 	}
 
 	public String getBook_id() {
@@ -48,22 +57,6 @@ public class Book {
 		this.publisher = publisher;
 	}
 
-	public User getRental_User() {
-		return rental_User;
-	}
-
-	public void setRental_User(User rental_User) {
-		this.rental_User = rental_User;
-	}
-
-	public User getReserve_User() {
-		return reserve_User;
-	}
-
-	public void setReserve_User(User reserve_User) {
-		this.reserve_User = reserve_User;
-	}
-
 	public String getRental_date() {
 		return rental_date;
 	}
@@ -80,6 +73,22 @@ public class Book {
 		this.receive_date = receive_date;
 	}
 
+	public String getRental_name() {
+		return rental_name;
+	}
+
+	public void setRental_name(String rental_name) {
+		this.rental_name = rental_name;
+	}
+
+	public String getReserve_name() {
+		return reserve_name;
+	}
+
+	public void setReserve_name(String reserve_name) {
+		this.reserve_name = reserve_name;
+	}
+
 	public int getOverdue() {
 		return overdue;
 	}
@@ -87,7 +96,8 @@ public class Book {
 	public void setOverdue(int overdue) {
 		this.overdue = overdue;
 	}
-
+	
+	
 	
 	
 	
