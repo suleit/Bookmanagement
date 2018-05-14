@@ -3,15 +3,34 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="management.userDAO.BookMapper">
-	<resultMap type="management.vo.Book"
-		id="bookResultMap">
-		<result property="" column="string" />
-		
-		<association property="User" javaType="management.vo.User">
+	<resultMap type="management.vo.Book" id="bookResultMap">
+		<result property="book_id" column="book_id" />
+		<result property="title" column="title" />
+		<result property="publisher" column="publisher" />
+		<result property="book_id" column="book_id" />
+		<result property="rental_date" column="rental_date" />
+		<result property="receive_date" column="receive_date" />
+		<result property="overdue" column="overdue_date" />
+				
+		<association property="rental_User" javaType="management.vo.User">
 			<result property="user_id" column="user_id"/>
+			<result property="user_pw" column="user_pw"/>
+			<result property="name" column="name"/>
+			<result property="gisu" column="gisu"/>
+			<result property="classname" column="class"/>			
 		</association>
+		
+		<association property="reserve_User" javaType="management.vo.User">
+			<result property="user_id" column="user_id"/>
+			<result property="user_pw" column="user_pw"/>
+			<result property="name" column="name"/>
+			<result property="gisu" column="gisu"/>
+			<result property="classname" column="class"/>			
+		</association>
+		
 	</resultMap>
-	<select id="selectTest" resultMap="testTableResultMap"> 
+	
+	<select id="selectTest" parameterType="" resultMap="bookResultMap"> 
 	select b.book_id, b.title, b.publisher, 
 	f.name as "rentaluser_name", s.name as "reserve_name", 
 	r.rental_date, r.receive_date, r.overdue_date
@@ -19,6 +38,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 join rental r on b.book_id=r.book_id 
  	 join bookuser f on r.rentalUser_id=f.user_id 
 	 join bookuser s on r.reserve_id=s.user_id
-	
 	</select>
+	<update id="updateOverdue" >
+	</update>
+	
+	<insert id="insertBook" parameterType="Book">
+		insert into book (title, book_id, publisher) values(#{book_id}, #{title}, #{publisher});	
+	</insert>
+	
+	
 </mapper>
