@@ -26,7 +26,7 @@ public class MainUI extends JFrame {
 		P_NAME = new JPanel();
 		getContentPane().add(P_NAME, BorderLayout.NORTH);
 		
-		P_Panel = new JLabel("SC IT \uB3C4\uC11C\uAD00\uB9AC\uD504\uB85C\uADF8\uB7A8");
+		P_Panel = new JLabel("SCIT \uB3C4\uC11C\uAD00\uB9AC\uD504\uB85C\uADF8\uB7A8");
 		P_NAME.add(P_Panel);
 		
 		P_Bottom = new JPanel();
@@ -98,7 +98,7 @@ public class MainUI extends JFrame {
 		NO3_Scroll.setViewportView(txtrDsdasdsad);
 		
 		JP_NO4 = new JPanel();
-		tabbedPane.addTab("New tab", null, JP_NO4, null);
+		tabbedPane.addTab("\uB300\uC5EC/\uBC18\uB0A9", null, JP_NO4, null);
 		JP_NO4.setLayout(new BorderLayout(0, 0));
 		
 		JSplitPane splitPane_1 = new JSplitPane();
