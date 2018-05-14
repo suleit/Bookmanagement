@@ -30,9 +30,13 @@ import javax.swing.JTextPane;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+import java.awt.Dimension;
+import java.awt.Font;
 
 public class MainUI extends JFrame implements ActionListener {
 	public MainUI() {
+		setFont(new Font("Tahoma", Font.BOLD, 12));
+		setSize(new Dimension(940, 460));
 		setTitle("SCIT \uB3C4\uC11C\uAD00\uB9AC\uD504\uB85C\uADF8\uB7A8");
 		
 		P_NAME = new JPanel();
@@ -161,7 +165,6 @@ public class MainUI extends JFrame implements ActionListener {
 		P3_Panel3.setLayout(new BorderLayout(0, 0));
 		
 		table_3 = new JTable();
-		table_3.setBorder(new MatteBorder(1, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		P3_Panel3.add(table_3, BorderLayout.CENTER);
 		
 		JP_NO3 = new JPanel();
@@ -292,6 +295,8 @@ public class MainUI extends JFrame implements ActionListener {
 		table = new JTable();
 		table.setBorder(new MatteBorder(1, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		panel_8.add(table, BorderLayout.CENTER);
+		
+		setVisible(true);
 	}
 
 	private JPanel contentPane;
@@ -353,7 +358,6 @@ public class MainUI extends JFrame implements ActionListener {
 	private JTable table_1;
 	private JPanel NO3_Panel2;
 	private JTable table_2;
-	private JTable table_3;
 	private JPanel panel;
 	private JPanel panel_9;
 	private JPanel panel_10;
@@ -363,6 +367,7 @@ public class MainUI extends JFrame implements ActionListener {
 	private JTextPane textPane;
 	private JTextPane textPane_1;
 	private JTextPane textPane_2;
+	private JTable table_3;
 
 	
 	public static void main(String[] args) {
