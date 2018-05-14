@@ -32,7 +32,7 @@ public class MainUI extends JFrame implements ActionListener {
 		P_NAME = new JPanel();
 		getContentPane().add(P_NAME, BorderLayout.NORTH);
 		
-		P_Panel = new JLabel("SC IT \uB3C4\uC11C\uAD00\uB9AC\uD504\uB85C\uADF8\uB7A8");
+		P_Panel = new JLabel("SCIT \uB3C4\uC11C\uAD00\uB9AC\uD504\uB85C\uADF8\uB7A8");
 		P_NAME.add(P_Panel);
 		
 		P_Bottom = new JPanel();
