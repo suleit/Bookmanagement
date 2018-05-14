@@ -19,8 +19,14 @@ import javax.swing.JTextArea;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.Cursor;
+import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 
-public class MainUI extends JFrame {
+public class MainUI extends JFrame implements ActionListener {
 	public MainUI() {
 		
 		P_NAME = new JPanel();
@@ -67,10 +73,66 @@ public class MainUI extends JFrame {
 		
 		JP_NO2 = new JPanel();
 		tabbedPane.addTab("\uB3C4\uC11C\uAD00\uB9AC", null, JP_NO2, null);
-		JP_NO2.setLayout(new BorderLayout(0, 0));
+		JP_NO2.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		splitPane = new JSplitPane();
-		JP_NO2.add(splitPane, BorderLayout.CENTER);
+		NO2_Panel = new JPanel();
+		JP_NO2.add(NO2_Panel);
+		NO2_Panel.setLayout(new BorderLayout(0, 0));
+		
+		NO2p_Label = new JLabel("\uC2E0\uADDC \uB3C4\uC11C \uB4F1\uB85D");
+		NO2p_Label.setHorizontalAlignment(SwingConstants.CENTER);
+		NO2_Panel.add(NO2p_Label, BorderLayout.NORTH);
+		
+		panel_1 = new JPanel();
+		NO2_Panel.add(panel_1, BorderLayout.CENTER);
+		
+		NO2p_Button1 = new JButton("\uC5D1\uC140\uD30C\uC77C\uC5C5\uB85C\uB4DC");
+		panel_1.add(NO2p_Button1);
+		
+		btnNewButton_1 = new JButton("\uC9C1\uC811 \uC785\uB825");
+		panel_1.add(btnNewButton_1);
+		
+		NO2_Panel2 = new JPanel();
+		JP_NO2.add(NO2_Panel2);
+		NO2_Panel2.setLayout(new BorderLayout(0, 0));
+		
+		NO2p_Panel1 = new JPanel();
+		NO2_Panel2.add(NO2p_Panel1, BorderLayout.NORTH);
+		
+		P1_Label = new JLabel("\uB3C4\uC11C\uC0AD\uC81C");
+		NO2p_Panel1.add(P1_Label);
+		
+		NO2p_Panel2 = new JPanel();
+		NO2_Panel2.add(NO2p_Panel2, BorderLayout.SOUTH);
+		
+		P2_Button = new JButton("\uC0AD\uC81C");
+		NO2p_Panel2.add(P2_Button);
+		
+		NO2p_Panel3 = new JPanel();
+		NO2_Panel2.add(NO2p_Panel3, BorderLayout.CENTER);
+		NO2p_Panel3.setLayout(new GridLayout(2, 0, 0, 0));
+		
+		P3_Panel2 = new JPanel();
+		NO2p_Panel3.add(P3_Panel2);
+		P3_Panel2.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		P2_Label1 = new JLabel("\uB3C4\uC11C\uC81C\uBAA9");
+		P2_Label1.setHorizontalAlignment(SwingConstants.CENTER);
+		P3_Panel2.add(P2_Label1);
+		
+		P2_TextField = new JTextField();
+		P3_Panel2.add(P2_TextField);
+		P2_TextField.setColumns(10);
+		
+		P2_Button1 = new JButton("\uAC80\uC0C9");
+		P3_Panel2.add(P2_Button1);
+		
+		P3_Panel3 = new JPanel();
+		NO2p_Panel3.add(P3_Panel3);
+		P3_Panel3.setLayout(new BorderLayout(0, 0));
+		
+		P3_TextArea = new JTextArea();
+		P3_Panel3.add(P3_TextArea, BorderLayout.CENTER);
 		
 		JP_NO3 = new JPanel();
 		tabbedPane.addTab("\uB3C4\uC11C\uBAA9\uB85D\uCD9C\uB825", null, JP_NO3, null);
@@ -98,12 +160,14 @@ public class MainUI extends JFrame {
 		NO3_Scroll.setViewportView(txtrDsdasdsad);
 		
 		JP_NO4 = new JPanel();
-		tabbedPane.addTab("New tab", null, JP_NO4, null);
-		JP_NO4.setLayout(new BorderLayout(0, 0));
+		tabbedPane.addTab("\uB300\uCD9C\uAD00\uB9AC", null, JP_NO4, null);
+		JP_NO4.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		JSplitPane splitPane_1 = new JSplitPane();
-		splitPane_1.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		JP_NO4.add(splitPane_1, BorderLayout.CENTER);
+		NO4_Panel = new JPanel();
+		JP_NO4.add(NO4_Panel);
+		
+		NO4_Panel2 = new JPanel();
+		JP_NO4.add(NO4_Panel2);
 	}
 
 	private JPanel contentPane;
@@ -119,7 +183,6 @@ public class MainUI extends JFrame {
 	private JLabel NO1_Label3;
 	private JLabel NO1_Label4;
 	private JPanel JP_NO2;
-	private JSplitPane splitPane;
 	private JPanel JP_NO3;
 	private JPanel NO3_Panel;
 	private JButton NO3_Button1;
@@ -130,6 +193,25 @@ public class MainUI extends JFrame {
 	private JTextArea txtrDsdasdsad;
 	private JPanel panel;
 	private JPanel JP_NO4;
+	private JPanel NO4_Panel;
+	private JPanel NO4_Panel2;
+	private JPanel NO2_Panel;
+	private JPanel NO2_Panel2;
+	private JLabel NO2p_Label;
+	private JPanel panel_1;
+	private JButton NO2p_Button1;
+	private JButton btnNewButton_1;
+	private JPanel NO2p_Panel1;
+	private JPanel NO2p_Panel2;
+	private JPanel NO2p_Panel3;
+	private JButton P2_Button;
+	private JLabel P1_Label;
+	private JPanel P3_Panel2;
+	private JPanel P3_Panel3;
+	private JLabel P2_Label1;
+	private JTextField P2_TextField;
+	private JButton P2_Button1;
+	private JTextArea P3_TextArea;
 
 	
 	public static void main(String[] args) {
@@ -146,4 +228,6 @@ public class MainUI extends JFrame {
 	}
 
 
+	public void actionPerformed(ActionEvent e) {
+	}
 }
