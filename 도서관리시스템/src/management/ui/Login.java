@@ -2,7 +2,6 @@ package management.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -14,9 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 
-public class Login extends JFrame implements ActionListener{
+public class Login extends JFrame implements ActionListener {
 
 	private JLabel lbl_title, lbl_id, lbl_password;
 	private JTextField tf_id;
@@ -28,7 +26,7 @@ public class Login extends JFrame implements ActionListener{
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		lbl_title = new JLabel("도서관리프로그램", JLabel.CENTER);
+		lbl_title = new JLabel("SCIT 도서관리프로그램", JLabel.CENTER);
 		lbl_title.setFont(new Font("굴림", Font.BOLD, 25));
 		lbl_id = new JLabel("ID");
 		lbl_id.setPreferredSize(new Dimension(80, 20));
@@ -43,7 +41,7 @@ public class Login extends JFrame implements ActionListener{
 		btn_cancel = new JButton("Cancel");
 		btn_cancel.addActionListener(this);
 
-		getContentPane().add(lbl_title, BorderLayout.NORTH);
+		add(lbl_title, BorderLayout.NORTH);
 
 		JPanel p_center_1 = new JPanel();
 		p_center_1.add(lbl_id);
@@ -56,18 +54,21 @@ public class Login extends JFrame implements ActionListener{
 		JPanel p_center = new JPanel(new GridLayout(2, 1));
 		p_center.add(p_center_1);
 		p_center.add(p_center_2);
-		getContentPane().add(p_center, BorderLayout.CENTER);
+		add(p_center, BorderLayout.CENTER);
 
 		JPanel p_south = new JPanel();
 		p_south.add(btn_ok);
 		p_south.add(btn_cancel);
-		getContentPane().add(p_south, BorderLayout.SOUTH);
+		add(p_south, BorderLayout.SOUTH);
 
 		pack();
 		setVisible(true);
 
 	}
 
+	public static void main(String[] args) {
+		Login login = new Login();
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -76,7 +77,7 @@ public class Login extends JFrame implements ActionListener{
 		if (source == btn_ok) {
 			String id = tf_id.getText();
 			this.dispose();
-			//여기서 new ChattingMain(id);이거를 지웠음
+			new MainUI();
 		} else if (source == btn_cancel) {
 			System.exit(0);
 		}
