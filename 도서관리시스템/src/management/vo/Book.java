@@ -97,6 +97,18 @@ public class Book {
 		this.overdue = overdue;
 	}
 	
+	public String printBookInfo() {
+		return book_id+", "+title+", "+publisher;
+	}
+
+	@Override
+	public String toString() {
+		return "Book [bookrental_id=" + bookrental_id + ", book_id=" + book_id + ", title=" + title + ", publisher="
+				+ publisher + ", rental_date=" + rental_date + ", receive_date=" + receive_date + ", rental_name="
+				+ rental_name + ", reserve_name=" + reserve_name + ", overdue=" + overdue + "]";
+	}
+	
+	
 	
 	
 	

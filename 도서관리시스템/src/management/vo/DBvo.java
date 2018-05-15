@@ -80,8 +80,17 @@ public class DBvo {
 	public void setOverdue(int overdue) {
 		this.overdue = overdue;
 	}
+
+	@Override
+	public String toString() {
+		return "DBvo [bookrental_id=" + bookrental_id + ", book_id=" + book_id + ", title=" + title + ", publisher="
+				+ publisher + ", rental_date=" + rental_date + ", rental_name=" + rental_name + ", rental_id="
+				+ rental_id + ", gisu=" + gisu + ", classname=" + classname + ", overdue=" + overdue + "]";
+	}
 	
-	
+	public String printBookInfo() {
+		return book_id+", "+title+", "+publisher;
+	}
 	
 	
 	

@@ -4,14 +4,13 @@ import java.util.ArrayList;
 
 import management.userDAO.BookDao;
 import management.vo.Book;
+import management.vo.User;
 
 public class testDAo {
 
 	public static void main(String[] args) {
-		
-		
-		CSVRead cr=new CSVRead();
-		BookDao bd=new BookDao();
+		BookDao bd=new BookDao();		
+/*		CSVRead cr=new CSVRead();
 		ArrayList<String[]> excelRead=(ArrayList<String[]>) cr.readCsv();
 		ArrayList<Book> booklist=new ArrayList<>();
 		
@@ -22,8 +21,16 @@ public class testDAo {
 				boolean result=bd.insertBook(b);
 				System.out.println(result);
 		}// for
+*/		
 		
+//		ArrayList<Book>books= bd.findBook("프로그래밍");
 		
+//		for (Book b : books) {
+//			System.out.println(b);
+//		}
+		
+//		User u1=bd.findUser("sul");
+//		System.out.println(u1);
 		
 		
 

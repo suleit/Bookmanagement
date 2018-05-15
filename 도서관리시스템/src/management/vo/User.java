@@ -53,6 +53,13 @@ public class User {
 	public void setClassname(String classname) {
 		this.classname = classname;
 	}
+
+
+	@Override
+	public String toString() {
+		return "User [user_id=" + user_id + ", user_pw=" + user_pw + ", name=" + name + ", gisu=" + gisu
+				+ ", classname=" + classname + "]";
+	}
 	
 	
 
