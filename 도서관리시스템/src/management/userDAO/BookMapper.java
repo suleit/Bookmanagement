@@ -3,6 +3,7 @@ package management.userDAO;
 import java.util.ArrayList;
 
 import management.vo.Book;
+import management.vo.DBvo;
 import management.vo.User;
 
 public interface BookMapper {
