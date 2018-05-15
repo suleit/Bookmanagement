@@ -10,9 +10,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import management.userDAO.BookDao;
+import management.vo.*;
 
 public class Login extends JFrame implements ActionListener {
 
@@ -20,6 +24,7 @@ public class Login extends JFrame implements ActionListener {
 	private JTextField tf_id;
 	private JPasswordField tf_password;
 	private JButton btn_ok, btn_cancel;
+	private BookDao bd= new BookDao();
 
 	public Login() {
 		super("SCIT 도서관리프로그램");
@@ -76,8 +81,14 @@ public class Login extends JFrame implements ActionListener {
 
 		if (source == btn_ok) {
 			String id = tf_id.getText();
-			this.dispose();
-			new MainUI();
+			String pw = String.valueOf(tf_password.getPassword());
+			User user1=bd.findUser(id);	
+			if(pw.equals(user1.getUser_pw())) {
+				this.dispose();				
+				new MainUI();				
+			}else {
+				new JOptionPane().showMessageDialog(null,"로그인 정보가 불일치합니다.","로그인 실패", JOptionPane.WARNING_MESSAGE);
+			}
 		} else if (source == btn_cancel) {
 			System.exit(0);
 		}
