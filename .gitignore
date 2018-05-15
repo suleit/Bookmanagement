@@ -37,3 +37,6 @@ local.properties
 .factorypath
 .buildpath
 .target
+*.class
+도서관리시스템/bin/management/userDAO/BookMapper.class
+도서관리시스템/bin/management/userDAO/BookMapper.class
