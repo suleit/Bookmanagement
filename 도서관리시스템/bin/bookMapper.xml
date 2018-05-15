@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="management.userDAO.BookMapper">
-
+		
 	<insert id="insertBook" parameterType="Book">
 	insert into book (title, book_id, publisher) values(#{title}, #{book_id}, #{publisher})	
 	</insert>
@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	from book b full outer join bookrental r on b.book_id=r.book_id 
  	left outer join bookuser f on r.rentalUser_id=f.user_id
  	left outer join bookuser s on r.reserve_id=s.user_id
-	where b.title like  '%'|| #{title} || '%' 
+	where lower(b.title) like lower('%'|| #{title} || '%') 
 	</select>
 	
 	<delete id="deletebook" parameterType="Book">
@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findAllbook" resultType="Book">
 	select b.book_id, b.title, b.publisher, nvl(f.name,' ' )as rental_name, nvl(s.name, ' ') as reserve_name, 
 	r.rental_date, r.receive_date, r.overdue_date
- 	from book b full outer join bookrental r on b.book_id=r.book_id 
+ 	from book b left outer join bookrental r on b.book_id=r.book_id 
  	left outer join bookuser f on r.rentalUser_id=f.user_id
  	left outer join bookuser s on r.reserve_id=s.user_id
 	</select>
@@ -62,7 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	from book b full outer join bookrental r on b.book_id=r.book_id 
  	left outer join bookuser f on r.rentalUser_id=f.user_id
  	left outer join bookuser s on r.reserve_id=s.user_id
- 	where b.title like '%#{title}%'
+ 	where lower(b.title) like lower('%'|| #{title} || '%') 
 	and r.receive_date is null 
 	and r.reserve_id is null
 	</select>
@@ -73,10 +73,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	from book b join bookrental r on b.book_id=r.book_id 
  	left outer join bookuser f on r.rentalUser_id=f.user_id
  	left outer join bookuser s on r.reserve_id=s.user_id
-	where  b.title like '%#{title}%' and r.receive_date is null	
+	where  lower(b.title) like lower('%'|| #{title} || '%') 
+	and r.receive_date is null and r.rental_date is not null
 	</select>
 	
-	<insert id="rentalBook" parameterType="String">
+	<insert id="rentalBook" parameterType="map">
 	insert into bookrental (rental_id, book_id, rental_date, rentaluser_id) 
 	values((select nvl(max(rental_id),'0')+1 from bookrental),#{book_id},sysdate,#{user_id})
 	</insert>
@@ -85,7 +86,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	update bookrental set receive_date=sysdate where rental_id=#{bookrental_id}
 	</update>
 	
-	<update id="updateReserve" parameterType="String">
+	<update id="updateReserve" parameterType="map">
 	update bookrental set reserve_id = #{user_id} where rental_id = #{bookrental_id}
 	</update>
 	

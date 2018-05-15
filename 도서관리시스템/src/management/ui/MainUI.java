@@ -115,10 +115,11 @@ public class MainUI extends JFrame implements ActionListener {
 		JP_NO2.add(NO2_Panel);
 		NO2_Panel.setLayout(new BorderLayout(0, 0));
 		
+
 		NO2p_Label = new JLabel("\uC2E0\uADDC \uB3C4\uC11C \uB4F1\uB85D");
 		NO2p_Label.setHorizontalAlignment(SwingConstants.CENTER);
 		NO2_Panel.add(NO2p_Label, BorderLayout.NORTH);
-		NO2p_Label.setPreferredSize(new Dimension(94, 28));
+		
 		
 		REGISTER_MAIN = new JPanel();
 		REGISTER_MAIN.setBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(0, 0, 0)));
@@ -127,6 +128,13 @@ public class MainUI extends JFrame implements ActionListener {
 		B_INPUT = new JButton("\uC9C1\uC811 \uC785\uB825");
 		B_INPUT.addActionListener(this);
 		REGISTER_MAIN.add(B_INPUT);
+		
+		panel = new JPanel();
+		NO2_Panel.add(panel, BorderLayout.NORTH);
+		
+		NO2p_Label = new JLabel("\uC2E0\uADDC \uB3C4\uC11C \uB4F1\uB85D");
+		panel.add(NO2p_Label);
+		NO2p_Label.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		NO2_Panel2 = new JPanel();
 		NO2_Panel2.setBorder(new MatteBorder(1, 0, 1, 1, (Color) new Color(0, 0, 0)));
@@ -150,20 +158,26 @@ public class MainUI extends JFrame implements ActionListener {
 		
 		DELETE_MAIN = new JPanel();
 		NO2_Panel2.add(DELETE_MAIN, BorderLayout.CENTER);
-		DELETE_MAIN.setLayout(new GridLayout(2, 0, 0, 0));
+		DELETE_MAIN.setLayout(new BorderLayout(0, 0));
 		
 		P1_DELETEMAIN = new JPanel();
-		DELETE_MAIN.add(P1_DELETEMAIN);
-		P1_DELETEMAIN.setLayout(new GridLayout(1, 0, 0, 0));
+		DELETE_MAIN.add(P1_DELETEMAIN, BorderLayout.NORTH);
+		P1_DELETEMAIN.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		panel = new JPanel();
 		P1_DELETEMAIN.add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 		
+
 		lblNewLabel = new JLabel("\uB3C4\uC11C\uC81C\uBAA9");
 		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblNewLabel);
+
+		JTextField DM_TXTF = new JTextField();
+		P1_DELETEMAIN.add(DM_TXTF);
+		DM_TXTF.setColumns(20);
+
 		
 		panel_1 = new JPanel();
 		P1_DELETEMAIN.add(panel_1);
@@ -256,11 +270,11 @@ public class MainUI extends JFrame implements ActionListener {
 		
 		RENTAL_MAIN = new JPanel();
 		NO4_Panel.add(RENTAL_MAIN, BorderLayout.CENTER);
-		RENTAL_MAIN.setLayout(new GridLayout(2, 0, 0, 0));
+		RENTAL_MAIN.setLayout(new BorderLayout(0, 0));
 		
 		P1_RENTALMAIN = new JPanel();
-		RENTAL_MAIN.add(P1_RENTALMAIN);
-		P1_RENTALMAIN.setLayout(new GridLayout(1, 0, 0, 0));
+		RENTAL_MAIN.add(P1_RENTALMAIN, BorderLayout.NORTH);
+		P1_RENTALMAIN.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		P1_RENTALNAME_LABEL = new JLabel("\uB3C4\uC11C\uC81C\uBAA9");
 		P1_RENTALNAME_LABEL.setHorizontalAlignment(SwingConstants.CENTER);
@@ -268,7 +282,7 @@ public class MainUI extends JFrame implements ActionListener {
 		
 		P1_RETAL_TXTF = new JTextField();
 		P1_RENTALMAIN.add(P1_RETAL_TXTF);
-		P1_RETAL_TXTF.setColumns(10);
+		P1_RETAL_TXTF.setColumns(20);
 		
 		P1_RENTAL_BUTTON = new JButton("\uAC80\uC0C9");
 		P1_RENTALMAIN.add(P1_RENTAL_BUTTON);
@@ -303,11 +317,11 @@ public class MainUI extends JFrame implements ActionListener {
 		
 		RESERVE_MAIN = new JPanel();
 		NO4_Panel2.add(RESERVE_MAIN, BorderLayout.CENTER);
-		RESERVE_MAIN.setLayout(new GridLayout(2, 0, 0, 0));
+		RESERVE_MAIN.setLayout(new BorderLayout(0, 0));
 		
 		P1_RESERVE = new JPanel();
-		RESERVE_MAIN.add(P1_RESERVE);
-		P1_RESERVE.setLayout(new GridLayout(1, 0, 0, 0));
+		RESERVE_MAIN.add(P1_RESERVE, BorderLayout.NORTH);
+		P1_RESERVE.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		P1_RESERVE_LABEL = new JLabel("\uB3C4\uC11C\uC81C\uBAA9");
 		P1_RESERVE_LABEL.setHorizontalAlignment(SwingConstants.CENTER);
@@ -315,13 +329,13 @@ public class MainUI extends JFrame implements ActionListener {
 		
 		P1_RESERVE_TXTF = new JTextField();
 		P1_RESERVE.add(P1_RESERVE_TXTF);
-		P1_RESERVE_TXTF.setColumns(10);
+		P1_RESERVE_TXTF.setColumns(20);
 		
 		P1_RESERVE_BUTTON = new JButton("\uAC80\uC0C9");
 		P1_RESERVE.add(P1_RESERVE_BUTTON);
 		
 		P2_RESERVE = new JPanel();
-		RESERVE_MAIN.add(P2_RESERVE);
+		RESERVE_MAIN.add(P2_RESERVE, BorderLayout.CENTER);
 		P2_RESERVE.setLayout(new BorderLayout(0, 0));
 		
 		P2_RESERVE_TABLE = new JTable();
@@ -397,6 +411,7 @@ public class MainUI extends JFrame implements ActionListener {
 	private JTextPane RENTAL_TXT;
 	private JTable DM_TABLE;
 	private JPanel panel;
+
 	private JPanel panel_1;
 	private JPanel panel_2;
 	private JLabel lblNewLabel;
@@ -404,6 +419,7 @@ public class MainUI extends JFrame implements ActionListener {
 	private JTextField textField;
 	private JPanel panel_4;
 	private JButton button;
+
 
 	
 	public static void main(String[] args) {
