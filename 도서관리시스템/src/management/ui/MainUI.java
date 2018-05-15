@@ -24,6 +24,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JDesktopPane;
@@ -33,6 +35,10 @@ import javax.swing.JTextPane;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.table.DefaultTableModel;
+
+import management.userDAO.BookDao;
+import management.vo.Book;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -40,6 +46,7 @@ import java.awt.Frame;
 
 public class MainUI extends JFrame implements ActionListener {
 	public MainUI() {
+		boolean result=bd.updateOverdue();		
 		setFont(new Font("Tahoma", Font.BOLD, 12));
 		setSize(new Dimension(940, 460));
 		setTitle("SCIT \uB3C4\uC11C\uAD00\uB9AC\uD504\uB85C\uADF8\uB7A8");
@@ -172,9 +179,6 @@ public class MainUI extends JFrame implements ActionListener {
 		DELETE_MAIN.add(P2_DELETEMAIN);
 		P2_DELETEMAIN.setLayout(new BorderLayout(0, 0));
 		
-		DM_TABLE = new JTable();
-		P2_DELETEMAIN.add(DM_TABLE, BorderLayout.CENTER);
-		
 		JP_NO3 = new JPanel();
 		TABP.addTab("\uB3C4\uC11C\uBAA9\uB85D\uCD9C\uB825", null, JP_NO3, null);
 		JP_NO3.setLayout(new BorderLayout(0, 0));
@@ -198,11 +202,7 @@ public class MainUI extends JFrame implements ActionListener {
 		NO3_Panel2 = new JPanel();
 		JP_NO3.add(NO3_Panel2, BorderLayout.CENTER);
 		NO3_Panel2.setLayout(new BorderLayout(0, 0));
-		
-		NO3_TABLE = new JTable();
-		NO3_TABLE.setBorder(new LineBorder(new Color(0, 0, 0)));
-		NO3_Panel2.add(NO3_TABLE, BorderLayout.CENTER);
-		
+				
 		JP_NO4 = new JPanel();
 		TABP.addTab("\uB300\uCD9C\uAD00\uB9AC", null, JP_NO4, null);
 		JP_NO4.setLayout(new GridLayout(1, 0, 0, 0));
@@ -247,15 +247,12 @@ public class MainUI extends JFrame implements ActionListener {
 		P1_RETAL_TXTF.setColumns(20);
 		
 		P1_RENTAL_BUTTON = new JButton("\uAC80\uC0C9");
+		P1_RENTAL_BUTTON.addActionListener(this);
 		P1_RENTALMAIN.add(P1_RENTAL_BUTTON);
 		
 		P2_RENTALMAIN = new JPanel();
 		RENTAL_MAIN.add(P2_RENTALMAIN);
 		P2_RENTALMAIN.setLayout(new BorderLayout(0, 0));
-		
-		P2_RENTAL_TABLE = new JTable();
-		P2_RENTAL_TABLE.setBorder(new MatteBorder(1, 0, 1, 0, (Color) new Color(0, 0, 0)));
-		P2_RENTALMAIN.add(P2_RENTAL_TABLE, BorderLayout.CENTER);
 		
 		NO4_Panel2 = new JPanel();
 		NO4_Panel2.setBorder(new MatteBorder(1, 0, 1, 1, (Color) new Color(0, 0, 0)));
@@ -299,11 +296,7 @@ public class MainUI extends JFrame implements ActionListener {
 		P2_RESERVE = new JPanel();
 		RESERVE_MAIN.add(P2_RESERVE, BorderLayout.CENTER);
 		P2_RESERVE.setLayout(new BorderLayout(0, 0));
-		
-		P2_RESERVE_TABLE = new JTable();
-		P2_RESERVE_TABLE.setBorder(new MatteBorder(1, 0, 1, 0, (Color) new Color(0, 0, 0)));
-		P2_RESERVE.add(P2_RESERVE_TABLE, BorderLayout.CENTER);
-		
+				
 		setVisible(true);
 	}
 
@@ -361,10 +354,7 @@ public class MainUI extends JFrame implements ActionListener {
 	private JLabel P1_RESERVE_LABEL;
 	private JTextField P1_RESERVE_TXTF;
 	private JButton P1_RESERVE_BUTTON;
-	private JTable P2_RESERVE_TABLE;
-	private JTable P2_RENTAL_TABLE;
 	private JPanel NO3_Panel2;
-	private JTable NO3_TABLE;
 	private JPanel INTRO_NAME;
 	private JPanel NO1_MAIN;
 	private JPanel P_MANAGEMENT;
@@ -374,9 +364,10 @@ public class MainUI extends JFrame implements ActionListener {
 	private JTextPane PRINT_TXT;
 	private JTextPane MANAGEMENT_TXT;
 	private JTextPane RENTAL_TXT;
-	private JTable DM_TABLE;
 	private JPanel panel;
-
+	private BookDao bd= new BookDao();
+	private DefaultTableModel model;
+	private JTable table_rental;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -415,5 +406,36 @@ public class MainUI extends JFrame implements ActionListener {
 		if(e.getSource() == B_DELETE) {//도서삭제 삭제버튼
 			
 		}
+		if(e.getSource()==P1_RENTAL_BUTTON||e.getSource()==P1_RESERVE_TXTF) {
+			String bookname=P1_RETAL_TXTF.getText();
+			 if (model !=null) model.setRowCount(0);
+				List<Book> booksforRental=bd.findBookForRent(bookname);
+			if(booksforRental!=null) {
+				int rows= booksforRental.size();
+				Object[][] objs=new Object[rows][7];
+			for (int i = 0; i < booksforRental.size(); i++) {
+				objs[i][0]= booksforRental.get(i).getBook_id();
+				objs[i][1]= booksforRental.get(i).getTitle();
+				objs[i][2]= booksforRental.get(i).getPublisher();
+				objs[i][3]= booksforRental.get(i).getRental_name();
+				objs[i][4]= booksforRental.get(i).getRental_date();
+				objs[i][5]= booksforRental.get(i).getReserve_name();
+				objs[i][6]= booksforRental.get(i).getOverdue();
+			}	
+				
+			}
+			
+		}
 	}
+		
+		private void setTable0() throws Exception {
+			
+		}
+		
+		private void setTable() throws Exception {
+			
+		}
+		
+		
+	
 }
