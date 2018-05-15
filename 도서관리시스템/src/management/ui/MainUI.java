@@ -37,6 +37,8 @@ import javax.swing.border.MatteBorder;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
+import javax.swing.BoxLayout;
+import java.awt.GridBagConstraints;
 
 public class MainUI extends JFrame implements ActionListener {
 	public MainUI() {
@@ -116,6 +118,7 @@ public class MainUI extends JFrame implements ActionListener {
 		NO2p_Label = new JLabel("\uC2E0\uADDC \uB3C4\uC11C \uB4F1\uB85D");
 		NO2p_Label.setHorizontalAlignment(SwingConstants.CENTER);
 		NO2_Panel.add(NO2p_Label, BorderLayout.NORTH);
+		NO2p_Label.setPreferredSize(new Dimension(94, 28));
 		
 		REGISTER_MAIN = new JPanel();
 		REGISTER_MAIN.setBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(0, 0, 0)));
@@ -153,17 +156,41 @@ public class MainUI extends JFrame implements ActionListener {
 		DELETE_MAIN.add(P1_DELETEMAIN);
 		P1_DELETEMAIN.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		DM_LABEL = new JLabel("\uB3C4\uC11C\uC81C\uBAA9");
-		DM_LABEL.setHorizontalAlignment(SwingConstants.CENTER);
-		P1_DELETEMAIN.add(DM_LABEL);
+		panel = new JPanel();
+		P1_DELETEMAIN.add(panel);
+		panel.setLayout(new BorderLayout(0, 0));
 		
-		DM_TXTF = new JTextField();
-		P1_DELETEMAIN.add(DM_TXTF);
-		DM_TXTF.setColumns(10);
+		lblNewLabel = new JLabel("\uB3C4\uC11C\uC81C\uBAA9");
+		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblNewLabel);
 		
-		DM_BUTTON = new JButton("\uAC80\uC0C9");
-		DM_BUTTON.addActionListener(this);
-		P1_DELETEMAIN.add(DM_BUTTON);
+		panel_1 = new JPanel();
+		P1_DELETEMAIN.add(panel_1);
+		panel_1.setLayout(new BorderLayout(0, 0));
+		
+		panel_3 = new JPanel();
+		panel_1.add(panel_3);
+		panel_3.setLayout(null);
+		
+		textField = new JTextField();
+		textField.setBounds(0, 0, 152, 123);
+		textField.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_3.add(textField);
+		textField.setColumns(10);
+		
+		panel_2 = new JPanel();
+		P1_DELETEMAIN.add(panel_2);
+		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		panel_4 = new JPanel();
+		panel_2.add(panel_4);
+		panel_4.setLayout(new BorderLayout(0, 0));
+		
+		button = new JButton("\uAC80\uC0C9");
+		button.setAlignmentX(10.0f);
+		panel_2.add(button);
+		button.setHorizontalTextPosition(SwingConstants.CENTER);
 		
 		P2_DELETEMAIN = new JPanel();
 		DELETE_MAIN.add(P2_DELETEMAIN);
@@ -334,9 +361,6 @@ public class MainUI extends JFrame implements ActionListener {
 	private JLabel DELETE_LABEL;
 	private JPanel P1_DELETEMAIN;
 	private JPanel P2_DELETEMAIN;
-	private JLabel DM_LABEL;
-	private JTextField DM_TXTF;
-	private JButton DM_BUTTON;
 	private JPanel P4_RENTAL;
 	private JPanel RENTAL_BOTTOM;
 	private JPanel RENTAL_MAIN;
@@ -372,6 +396,14 @@ public class MainUI extends JFrame implements ActionListener {
 	private JTextPane MANAGEMENT_TXT;
 	private JTextPane RENTAL_TXT;
 	private JTable DM_TABLE;
+	private JPanel panel;
+	private JPanel panel_1;
+	private JPanel panel_2;
+	private JLabel lblNewLabel;
+	private JPanel panel_3;
+	private JTextField textField;
+	private JPanel panel_4;
+	private JButton button;
 
 	
 	public static void main(String[] args) {
@@ -404,9 +436,6 @@ public class MainUI extends JFrame implements ActionListener {
 			});
 			fs.setSize(300, 200);
 			fs.setLocation(200, 200);
-		}
-		if(e.getSource() == DM_BUTTON){//도서삭제 검색부분
-			
 		}
 		if(e.getSource() == B_DELETE) {//도서삭제 삭제버튼
 			
