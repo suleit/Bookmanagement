@@ -2,6 +2,8 @@ package management.userDAO;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Param;
+
 import management.vo.Book;
 import management.vo.DBvo;
 import management.vo.User;
@@ -72,7 +74,7 @@ public interface BookMapper {
 	 * @param user_id
 	 * @return
 	 */
-	public int rentalBook(String book_id, String user_id);
+	public int rentalBook(@Param("book_id") String book_id, @Param("user_id")String user_id);
 	/**
 	 * 반납할 책의 날짜 업데이트하기/ 선택한 값에서 bookrental_id 따올것 
 	 * @param bookrental_id
@@ -84,5 +86,5 @@ public interface BookMapper {
 	 * @param bookrental_id
 	 * @return
 	 */
-	public int updateReserve(String bookrental_id, String user_id);
+	public int updateReserve(@Param("bookrental_id")String bookrental_id, @Param("user_id")String user_id);
 }

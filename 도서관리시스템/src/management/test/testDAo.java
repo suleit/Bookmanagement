@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import management.userDAO.BookDao;
 import management.vo.Book;
+import management.vo.DBvo;
 import management.vo.User;
 
 public class testDAo {
@@ -23,15 +24,19 @@ public class testDAo {
 		}// for
 */		
 		
-//		ArrayList<Book>books= bd.findBook("프로그래밍");
+		ArrayList<Book>books= bd.findBookForReturn("");
 		
-//		for (Book b : books) {
-//			System.out.println(b);
-//		}
+		for (Book b : books) {
+			System.out.println(b);
+		}
 		
-//		User u1=bd.findUser("sul");
-//		System.out.println(u1);
+/*		User u1=bd.findUser("sul");
+		System.out.println(u1);
 		
+		boolean result=bd.updateReserve("2", "bong");
+		
+		System.out.println(result);
+*/		
 		
 
 		
