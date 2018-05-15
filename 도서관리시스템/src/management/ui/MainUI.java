@@ -74,7 +74,7 @@ public class MainUI extends JFrame implements ActionListener {
 		INTRO_NAME = new JPanel();
 		NO1_Panel.add(INTRO_NAME, BorderLayout.NORTH);
 		
-		INTRO_LABEL = new JLabel("SC IT \uB3C4\uC11C\uAD00\uB9AC\uC2DC\uC2A4\uD15C\uC744 \uC774\uC6A9\uD574 \uC8FC\uC154\uC11C \uAC10\uC0AC\uD569\uB2C8\uB2E4!");
+		INTRO_LABEL = new JLabel("<html>SC IT 도서관리시스템을 이용해주셔서 감사합니다!<br>대여기간은 7일입니다.<br></html>");
 		INTRO_LABEL.setHorizontalAlignment(SwingConstants.CENTER);
 		INTRO_NAME.add(INTRO_LABEL);
 		
@@ -123,13 +123,14 @@ public class MainUI extends JFrame implements ActionListener {
 		
 		REGISTER_MAIN = new JPanel();
 		REGISTER_MAIN.setBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(0, 0, 0)));
-		NO2_Panel.add(REGISTER_MAIN, BorderLayout.CENTER);
+		NO2_Panel.add(REGISTER_MAIN, BorderLayout.SOUTH);
 		
 		B_INPUT = new JButton("\uC9C1\uC811 \uC785\uB825");
 		B_INPUT.addActionListener(this);
 		REGISTER_MAIN.add(B_INPUT);
 		
 		panel = new JPanel();
+		panel.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		NO2_Panel.add(panel, BorderLayout.NORTH);
 		
 		NO2p_Label = new JLabel("\uC2E0\uADDC \uB3C4\uC11C \uB4F1\uB85D");
@@ -438,7 +439,10 @@ public class MainUI extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("시스템 종료")) {
-			System.exit(0);
+			int result = JOptionPane.showConfirmDialog(null, "정말로 종료하시겠습니까?", "시스템 종료", JOptionPane.YES_NO_OPTION);
+			if(JOptionPane.YES_OPTION == result) {
+				System.exit(0);	
+			}
 		}
 		if(e.getSource() == B_INPUT) {
 			final Frame fs = new Frame("도서 검색");
@@ -447,14 +451,16 @@ public class MainUI extends JFrame implements ActionListener {
 				public void windowClosing(WindowEvent e) {
 					fs.setVisible(false);
 					fs.dispose();
-					
 				}
 			});
 			fs.setSize(300, 200);
 			fs.setLocation(200, 200);
 		}
-		if(e.getSource() == B_DELETE) {//도서삭제 삭제버튼
-			
+		if(e.getActionCommand().equals("삭제")) {//도서삭제버튼
+			int result = JOptionPane.showConfirmDialog(null, "정말로 삭제하시겠습니까?", "삭제", JOptionPane.YES_NO_OPTION);
+			if(JOptionPane.YES_OPTION == result) {
+				
+			}
 		}
 	}
 }
