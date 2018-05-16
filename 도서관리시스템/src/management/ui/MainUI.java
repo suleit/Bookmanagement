@@ -135,8 +135,8 @@ public class MainUI extends JFrame implements ActionListener {
 		B_INPUT = new JButton("\uC9C1\uC811 \uC785\uB825");
 		B_INPUT.addActionListener(this);
 		REGISTER_MAIN.add(B_INPUT);
-		//new **ListUI(); 이런식으로 써서 클래스로 바로연결
-
+		 
+		
 		panel = new JPanel();
 		panel.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
 		NO2_Panel.add(panel, BorderLayout.NORTH);
@@ -442,17 +442,12 @@ public class MainUI extends JFrame implements ActionListener {
 			}
 		}
 		if (e.getSource() == B_INPUT) {
-			final Frame fs = new Frame("도서 검색");
-			fs.setVisible(true);
-			fs.addWindowListener(new WindowAdapter() {
-				public void windowClosing(WindowEvent e) {
-					fs.setVisible(false);
-					fs.dispose();
-				}
-			});
-			fs.setSize(300, 200);
-			fs.setLocation(200, 200);
+			InputUI iu=null;
+			if(iu!=null)
+				iu.dispose();
+			iu=new InputUI();
 		}
+		
 		if (e.getActionCommand().equals("삭제")) {// 도서삭제버튼
 			int result = JOptionPane.showConfirmDialog(null, "정말로 삭제하시겠습니까?", "삭제", JOptionPane.YES_NO_OPTION);
 			if (JOptionPane.YES_OPTION == result) {

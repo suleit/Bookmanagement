@@ -6,38 +6,101 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
 
 public class InputUI extends JFrame {
-	private JPanel panel;
-	private JPanel panel_1;
-	private JPanel panel_2;
-	private JPanel panel_3;
-	private JPanel panel_4;
+	private JPanel P_Panel1;
+	private JPanel P_Panel2;
+	private JPanel P_Panel3;
+	private JPanel P_Panel4;
+	private JPanel P1_Label;
 	private JLabel lblNewLabel;
+	private JTextField P1_TXTF;
+	private JPanel P2_Label;
+	private JLabel lblNewLabel_1;
+	private JTextField P2_TXTF;
+	private JPanel P3_Label;
+	private JLabel lblNewLabel_2;
+	private JTextField P3_TXTF;
+	private JPanel P3_NULL;
+	private JPanel P1_NULL;
+	private JButton P4_Button;
 	public InputUI() {
 		setTitle("\uB4F1\uB85D");
 		getContentPane().setLayout(new GridLayout(4, 0, 0, 0));
+		setFont(new Font("Tahoma", Font.BOLD, 12));
+		setSize(new Dimension(500, 250));
 		
-		panel = new JPanel();
-		getContentPane().add(panel);
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		P_Panel1 = new JPanel();
+		getContentPane().add(P_Panel1);
+		P_Panel1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		panel_4 = new JPanel();
-		panel.add(panel_4);
-		panel_4.setLayout(new BorderLayout(0, 0));
+		P1_Label = new JPanel();
+		P_Panel1.add(P1_Label);
+		P1_Label.setLayout(new BorderLayout(0, 0));
 		
-		lblNewLabel = new JLabel("New label");
-		panel_4.add(lblNewLabel, BorderLayout.NORTH);
+		lblNewLabel = new JLabel("\uC81C\uBAA9");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		P1_Label.add(lblNewLabel, BorderLayout.NORTH);
 		
-		panel_1 = new JPanel();
-		getContentPane().add(panel_1);
+		P1_NULL = new JPanel();
+		P_Panel1.add(P1_NULL);
 		
-		panel_2 = new JPanel();
-		getContentPane().add(panel_2);
+		P1_TXTF = new JTextField();
+		P_Panel1.add(P1_TXTF);
+		P1_TXTF.setColumns(20);
 		
-		panel_3 = new JPanel();
-		getContentPane().add(panel_3);
+		P_Panel2 = new JPanel();
+		getContentPane().add(P_Panel2);
+		
+		P2_Label = new JPanel();
+		P_Panel2.add(P2_Label);
+		
+		lblNewLabel_1 = new JLabel("\uCD9C\uD310\uC0AC");
+		P2_Label.add(lblNewLabel_1);
+		
+		P2_TXTF = new JTextField();
+		P_Panel2.add(P2_TXTF);
+		P2_TXTF.setColumns(20);
+		
+		P_Panel3 = new JPanel();
+		getContentPane().add(P_Panel3);
+		
+		P3_Label = new JPanel();
+		P_Panel3.add(P3_Label);
+		
+		lblNewLabel_2 = new JLabel("\uC218\uB7C9");
+		P3_Label.add(lblNewLabel_2);
+		
+		P3_NULL = new JPanel();
+		P_Panel3.add(P3_NULL);
+		
+		P3_TXTF = new JTextField();
+		P_Panel3.add(P3_TXTF);
+		P3_TXTF.setColumns(20);
+		
+		P_Panel4 = new JPanel();
+		getContentPane().add(P_Panel4);
+		P_Panel4.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		P4_Button = new JButton("\uB4F1\uB85D");
+		P_Panel4.add(P4_Button);
+		
+		this.setVisible(true);
+	}
+	public JTextField getP1_TXTF() {
+		return P1_TXTF;
+	}
+	public JTextField getP2_TXTF() {
+		return P2_TXTF;
+	}
+	public JTextField getP3_TXTF() {
+		return P3_TXTF;
 	}
 
 }
