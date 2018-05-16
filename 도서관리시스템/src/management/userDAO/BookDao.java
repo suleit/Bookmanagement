@@ -57,7 +57,7 @@ public class BookDao {
 		return result;		
 	}
 	
-	public boolean deleteBook(Book book) {
+	public boolean deleteBook(String book_id) {
 		SqlSession session=null;
 		boolean result=false;
 		int cnt=0;
@@ -65,7 +65,7 @@ public class BookDao {
 		try {
 			session= factory.openSession();
 			BookMapper mapper= session.getMapper(BookMapper.class);
-			cnt= mapper.deletebook(book);
+			cnt= mapper.deletebook(book_id);
 			if(cnt>0) {
 				result=true;
 			}
@@ -261,6 +261,28 @@ public class BookDao {
 			if(session!=null)session.close();
 		}
 		return books;
+	}
+
+	public boolean updateHistoryOverdue() {
+		SqlSession session=null;
+		boolean result=false;
+		int cnt=0;
+		
+		try {
+			session= factory.openSession();
+			BookMapper mapper= session.getMapper(BookMapper.class);
+			cnt= mapper.updatehistoryOverdue();
+			if(cnt>0) {
+				result=true;
+			}
+			session.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null)session.close();
+		}
+		return result;		
 	}
 
 }

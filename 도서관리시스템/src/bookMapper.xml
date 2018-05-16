@@ -8,10 +8,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	insert into book (title, book_id, publisher) values(#{title}, #{book_id}, #{publisher})	
 	</insert>
 	
+	<update id="updatehistoryOverdue">
+	update bookrentalhistory set overdue_date=round(sysdate-(rental_date+7))
+	where receive_date is null and sysdate>(rental_date+7)
+	</update>
+	
 	<update id="updateOverdue">
 	update bookrental set overdue_date=round(sysdate-(rental_date+7))
-	where receive_date is null and sysdate>(rental_date+7)
-	</update>	
+	where sysdate>(rental_date+7)
+	</update>
+		
 	
 	<select id="findUser" parameterType="String" resultType="User">
 	select user_id, user_pw, name, gisu, class as classname, user_pw from BookUser where user_id=#{user_id}
@@ -20,32 +26,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findbook" parameterType="String" resultType="Book">
 	select b.book_id, b.title, b.publisher, nvl(f.name,' ' )as rental_name, nvl(s.name, ' ') as reserve_name, 
 	r.rental_date, r.receive_date, r.overdue_date
- 	from book b full outer join bookrental r on b.book_id=r.book_id 
+ 	from book b left outer join bookrental r on b.book_id=r.book_id 
  	left outer join bookuser f on r.rentalUser_id=f.user_id
  	left outer join bookuser s on r.reserve_id=s.user_id
 	where lower(b.title) like lower('%'|| #{title} || '%') 
 	</select>
 	
-	<delete id="deletebook" parameterType="Book">
+	<delete id="deletebook" parameterType="String">
 	delete from Book where book_id=#{book_id}
 	</delete>
 	
 	<select id="findAllbook" resultType="Book">
-	select b.book_id, b.title, b.publisher, nvl(f.name,' ' )as rental_name, nvl(s.name, ' ') as reserve_name, 
-	r.rental_date, r.receive_date, r.overdue_date
- 	from book b left outer join bookrental r on b.book_id=r.book_id 
- 	left outer join bookuser f on r.rentalUser_id=f.user_id
- 	left outer join bookuser s on r.reserve_id=s.user_id
- 	order by b.book_id
+	select book_id, title, publisher from book
+ 	order by to_number(book_id)
 	</select>
 	
 	<select id="findRentalBook" resultType="Book">
-	select b.book_id, b.title, b.publisher, nvl(f.name,' ' )as rental_name, nvl(s.name, ' ') as reserve_name, 
-	r.rental_date, r.receive_date, r.overdue_date
+	select r.rental_id, b.book_id, b.title, b.publisher, nvl(f.name,' ' )as rental_name, nvl(s.name, ' ') as reserve_name, 
+	r.rental_date, r.overdue_date
  	from book b join bookrental r on b.book_id=r.book_id 
  	left outer join bookuser f on r.rentalUser_id=f.user_id
  	left outer join bookuser s on r.reserve_id=s.user_id
- 	where r.receive_date is null
+ 	order by to_number(b.book_id)
 	</select>
 	
 	<select id="findOverdueBook" resultType="DBvo">
@@ -55,23 +57,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	left outer join bookuser f on r.rentalUser_id=f.user_id 
 	left outer join bookuser s on r.reserve_id=s.user_id
 	where r.overdue_date>0 and r.receive_date is null
+	order by to_number(r.rental_id)
 	</select>
 	
 	<select id="findBookForRent" parameterType="String" resultType="Book">
 	select b.book_id, b.title, b.publisher, nvl(f.name,' ' )as rental_name, nvl(s.name, ' ') as reserve_name, 
-	r.rental_date, r.receive_date, r.overdue_date
+	r.rental_date, r.overdue_date
  	from book b full outer join bookrental r on b.book_id=r.book_id 
  	left outer join bookuser f on r.rentalUser_id=f.user_id
  	left outer join bookuser s on r.reserve_id=s.user_id
  	where lower(b.title) like lower('%'|| #{title} || '%') 
 	and r.receive_date is null 
 	and r.reserve_id is null
-	order by b.book_id
+	order by to_number(b.book_id)
 	</select>
 	
 	<select id="findBookForReturn" parameterType="String" resultType="Book">
  	select r.rental_id as bookrental_id, b.book_id, b.title, b.publisher, nvl(f.name,' ' )as rental_name, nvl(s.name, ' ') as reserve_name, 
-	r.rental_date, r.receive_date, r.overdue_date
+	r.rental_date, r.overdue_date
  	from book b join bookrental r on b.book_id=r.book_id 
  	left outer join bookuser f on r.rentalUser_id=f.user_id
  	left outer join bookuser s on r.reserve_id=s.user_id
@@ -79,14 +82,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	and r.receive_date is null and r.rental_date is not null
 	</select>
 	
+	<insert id="rentalBookhistory" parameterType="map">
+	insert into bookrentalhistory (rental_id, book_id, rental_date, rentaluser_id) 
+	values((select nvl(max(rental_id),'0')+1 from bookrental),#{book_id},sysdate,#{user_id})
+	</insert>
+	
 	<insert id="rentalBook" parameterType="map">
 	insert into bookrental (rental_id, book_id, rental_date, rentaluser_id) 
 	values((select nvl(max(rental_id),'0')+1 from bookrental),#{book_id},sysdate,#{user_id})
 	</insert>
 	
 	<update id="updateReceiveDate" parameterType="String">
-	update bookrental set receive_date=sysdate where rental_id=#{bookrental_id}
+	update bookrentalhistory set receive_date=sysdate where rental_id=#{bookrental_id}
 	</update>
+	
+	<delete id="deleteBookRental" parameterType="String">
+	delete from bookrental where rental_id=#{bookrental_id}
+	</delete>
+	
 	
 	<update id="updateReserve" parameterType="map">
 	update bookrental set reserve_id = #{user_id} where rental_id = #{bookrental_id}

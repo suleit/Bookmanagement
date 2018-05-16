@@ -11,6 +11,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.SwingConstants;
+
+import management.userDAO.BookDao;
+
 import javax.swing.JButton;
 
 public class InputUI extends JFrame {
@@ -30,6 +33,9 @@ public class InputUI extends JFrame {
 	private JPanel P3_NULL;
 	private JPanel P1_NULL;
 	private JButton P4_Button;
+	private BookDao Dao=new BookDao();
+	
+	
 	public InputUI() {
 		setTitle("\uB4F1\uB85D");
 		getContentPane().setLayout(new GridLayout(4, 0, 0, 0));
@@ -93,14 +99,6 @@ public class InputUI extends JFrame {
 		
 		this.setVisible(true);
 	}
-	public JTextField getP1_TXTF() {
-		return P1_TXTF;
-	}
-	public JTextField getP2_TXTF() {
-		return P2_TXTF;
-	}
-	public JTextField getP3_TXTF() {
-		return P3_TXTF;
-	}
+
 
 }

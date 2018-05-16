@@ -1,38 +1,29 @@
 package management.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.FlowLayout;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
-import java.awt.GridBagLayout;
-import java.awt.CardLayout;
-import javax.swing.JSplitPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import java.awt.Component;
-import java.awt.ComponentOrientation;
-import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 import java.util.List;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
-import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import java.awt.Color;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
@@ -40,15 +31,22 @@ import javax.swing.table.DefaultTableModel;
 import management.userDAO.BookDao;
 import management.vo.Book;
 
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Frame;
-import javax.swing.BoxLayout;
-import java.awt.GridBagConstraints;
-
 public class MainUI extends JFrame implements ActionListener {
 	public MainUI() {
-		boolean result = bd.updateOverdue();
+
+		addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowOpened(java.awt.event.WindowEvent e) {
+				boolean result = bd.updateOverdue();
+				boolean result2 = bd.updateHistoryOverdue();
+				if (result && result2) {
+					System.out.println("연체일 계산 완료");
+				}
+			}
+
+		});
+
 		setFont(new Font("Tahoma", Font.BOLD, 12));
 		setSize(new Dimension(940, 460));
 		setTitle("SCIT \uB3C4\uC11C\uAD00\uB9AC\uD504\uB85C\uADF8\uB7A8");
@@ -345,7 +343,6 @@ public class MainUI extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 
-	private JPanel contentPane;
 	private JPanel P_NAME;
 	private JLabel P_SCIT;
 	private JPanel P_Bottom;
@@ -407,15 +404,13 @@ public class MainUI extends JFrame implements ActionListener {
 	private JTextPane MANAGEMENT_TXT;
 	private JTextPane RENTAL_TXT;
 	private JPanel panel;
+
 	private BookDao bd = new BookDao();
 	private DefaultTableModel model, model2, modelP3;
 	private JTable table_rental, table_return, p3_tables;
-	private JPanel panel_1;
-	private JPanel panel_2;
+	private JPanel panel_1, panel_2, panel_3, panel_4;
 	private JLabel lblNewLabel;
-	private JPanel panel_3;
 	private JTextField textField;
-	private JPanel panel_4;
 	private JButton button;
 	private List<Book> booksforRental, booksforReturn, booksforViewP3;
 	private JScrollPane rental_table_sc, return_table_sc, p3_sc;
@@ -441,12 +436,12 @@ public class MainUI extends JFrame implements ActionListener {
 			}
 		}
 		if (e.getSource() == B_INPUT) {
-			InputUI iu=null;
-			if(iu!=null)
+			InputUI iu = null;
+			if (iu != null)
 				iu.dispose();
-			iu=new InputUI();
+			iu = new InputUI();
 		}
-		
+
 		if (e.getActionCommand().equals("삭제")) {// 도서삭제버튼
 			int result = JOptionPane.showConfirmDialog(null, "정말로 삭제하시겠습니까?", "삭제", JOptionPane.YES_NO_OPTION);
 			if (JOptionPane.YES_OPTION == result) {
@@ -551,25 +546,19 @@ public class MainUI extends JFrame implements ActionListener {
 			if (booksforViewP3 != null) {
 				int rows = booksforViewP3.size();
 				if (rows > 0) {
-					Object[][] objs = new Object[rows][7];
+					Object[][] objs = new Object[rows][3];
 					for (int i = 0; i < rows; i++) {
 						objs[i][0] = booksforViewP3.get(i).getBook_id();
 						objs[i][1] = booksforViewP3.get(i).getTitle();
 						objs[i][2] = booksforViewP3.get(i).getPublisher();
-						objs[i][3] = booksforViewP3.get(i).getRental_name();
-						objs[i][4] = booksforViewP3.get(i).getRental_date();
-						objs[i][5] = booksforViewP3.get(i).getReserve_name();
-						objs[i][6] = booksforViewP3.get(i).getOverdue();
 					}
-
-					modelP3 = new DefaultTableModel(objs,
-							new String[] { "book.NO", "도서제목", "출판사", "대여자명", "대여일시", "예약자명", "연체일자" });
+					modelP3 = new DefaultTableModel(objs, new String[] { "book.NO", "도서제목", "출판사" });
 					p3_tables.setModel(modelP3);
 				}
 				p3_sc = new JScrollPane(p3_tables);
 				NO3_Panel2.add(p3_sc);
 			}
-		}// 버튼 1=전체도서정보  출력 완료
+		} // 버튼 1=전체도서정보 출력 완료
 		if (e.getSource() == NO3_Button2) {
 			if (p3_tables != null) {
 				NO3_Panel2.remove(p3_sc);
@@ -601,8 +590,7 @@ public class MainUI extends JFrame implements ActionListener {
 				p3_sc = new JScrollPane(p3_tables);
 				NO3_Panel2.add(p3_sc);
 			}
-		}// 대여중인 도서정보 출력 코드
-		
+		} // 버튼2= 대여중인 도서정보 출력 코드
 
 	}
 
