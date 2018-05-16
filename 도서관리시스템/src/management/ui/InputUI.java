@@ -2,8 +2,12 @@ package management.ui;
 
 import javax.swing.JFrame;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -13,10 +17,11 @@ import java.awt.Dimension;
 import javax.swing.SwingConstants;
 
 import management.userDAO.BookDao;
+import management.vo.Book;
 
 import javax.swing.JButton;
 
-public class InputUI extends JFrame {
+public class InputUI extends JFrame implements ActionListener {
 	private JPanel P_Panel1;
 	private JPanel P_Panel2;
 	private JPanel P_Panel3;
@@ -95,9 +100,38 @@ public class InputUI extends JFrame {
 		P_Panel4.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		P4_Button = new JButton("\uB4F1\uB85D");
+		P4_Button.addActionListener(this);
 		P_Panel4.add(P4_Button);
 		
 		this.setVisible(true);
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String bookName=P1_TXTF.getText();
+		String publisher=P2_TXTF.getText();
+		int num=Integer.parseInt(P3_TXTF.getText());
+		boolean result=false;
+		for (int i = 0; i < num; i++) {
+			Book b= new Book();
+			b.setPublisher(publisher);
+			b.setTitle(bookName);
+			
+			result=Dao.insertBook(b);
+			
+			if(result==false) {
+				break;
+			}
+		}
+		if(result) {
+			JOptionPane.showMessageDialog(this, "신규도서 등록이 완료되었습니다.");
+			dispose();
+		}else {
+			JOptionPane.showMessageDialog(this, "신규도서 등록 실패!");
+		}
+		
+		
 	}
 
 }
