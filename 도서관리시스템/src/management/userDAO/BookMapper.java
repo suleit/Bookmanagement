@@ -11,7 +11,12 @@ import management.vo.User;
 public interface BookMapper {
 
 	/**
-	 * 연체일 계산 (프로그램 시작시마다 수행)
+	 * 대여기록 테이블에 연체일 계산 (프로그램 시작시마다 수행)
+	 * @return
+	 */
+	public int updatehistoryOverdue();
+	/**
+	 * 렌탈테이블에 연체일 계산 
 	 * @return
 	 */
 	public int updateOverdue();
@@ -38,7 +43,7 @@ public interface BookMapper {
 	 * @param book
 	 * @return
 	 */
-	public int deletebook(Book book);
+	public int deletebook(String book_id);
 	/**
 	 * 모든 도서 상황 검색하여 나타내기 
 	 * @return
@@ -76,11 +81,26 @@ public interface BookMapper {
 	 */
 	public int rentalBook(@Param("book_id") String book_id, @Param("user_id")String user_id);
 	/**
-	 * 반납할 책의 날짜 업데이트하기/ 선택한 값에서 bookrental_id 따올것 
+	 * 책 대여 기록  테이블에 이력 남기기 jtable을 선택한 값에서 매개변수 따올것 
+	 * @param book_id
+	 * @param user_id
+	 * @return
+	 */
+	public int rentalBookhistory(@Param("book_id") String book_id, @Param("user_id")String user_id);
+
+	/**
+	 * 책의 반납일자  대여기록에 업데이트하기/ 선택한 값에서 bookrental_id 따올것 
 	 * @param bookrental_id
 	 * @return
 	 */
 	public int updateReceiveDate(String bookrental_id);
+	/**
+	 * 대여기록 삭제 
+	 * @param bookrental_id
+	 * @return
+	 */
+	public int deleteBookRental(String bookrental_id);
+	
 	/**
 	 *  예약자 아이디 업데이트하기 
 	 * @param bookrental_id

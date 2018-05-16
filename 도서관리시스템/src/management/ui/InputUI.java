@@ -34,6 +34,7 @@ public class InputUI extends JFrame {
 	private JPanel P1_NULL;
 	private JButton P4_Button;
 	private BookDao Dao = new BookDao();
+
 	
 	public InputUI() {
 		setTitle("\uB4F1\uB85D");
@@ -98,6 +99,5 @@ public class InputUI extends JFrame {
 		
 		this.setVisible(true);
 	}
-	
 
 }
