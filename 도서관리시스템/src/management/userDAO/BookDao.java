@@ -263,4 +263,9 @@ public class BookDao {
 		return books;
 	}
 
+	public int getSelectedRowCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

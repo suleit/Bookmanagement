@@ -38,6 +38,7 @@ import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 
 import management.userDAO.BookDao;
+import management.userDAO.BookMapper;
 import management.vo.Book;
 
 import java.awt.Dimension;
@@ -158,12 +159,12 @@ public class MainUI extends JFrame implements ActionListener {
 		DELETE_LABEL = new JLabel("\uB3C4\uC11C\uC0AD\uC81C");
 		DELETENAME.add(DELETE_LABEL);
 
-		BELETE_BOTTOM = new JPanel();
-		NO2_Panel2.add(BELETE_BOTTOM, BorderLayout.SOUTH);
+		DELETE_BOTTOM = new JPanel();
+		NO2_Panel2.add(DELETE_BOTTOM, BorderLayout.SOUTH);
 
 		B_DELETE = new JButton("\uC0AD\uC81C");
 		B_DELETE.addActionListener(this);
-		BELETE_BOTTOM.add(B_DELETE);
+		DELETE_BOTTOM.add(B_DELETE);
 
 		DELETE_MAIN = new JPanel();
 		NO2_Panel2.add(DELETE_MAIN, BorderLayout.CENTER);
@@ -370,7 +371,7 @@ public class MainUI extends JFrame implements ActionListener {
 	private JPanel REGISTER_MAIN;
 	private JButton B_INPUT;
 	private JPanel DELETENAME;
-	private JPanel BELETE_BOTTOM;
+	private JPanel DELETE_BOTTOM;
 	private JPanel DELETE_MAIN;
 	private JButton B_DELETE;
 	private JLabel DELETE_LABEL;
@@ -411,6 +412,7 @@ public class MainUI extends JFrame implements ActionListener {
 	private BookDao bd = new BookDao();
 	private DefaultTableModel model, model2, modelP3;
 	private JTable table_rental, table_return, p3_tables;
+	private JTable table_delete, delete_return, p4_table;
 	private JPanel panel_1;
 	private JPanel panel_2;
 	private JLabel lblNewLabel;
@@ -448,10 +450,18 @@ public class MainUI extends JFrame implements ActionListener {
 			iu=new InputUI();
 		}
 		
-		if (e.getActionCommand().equals("삭제")) {// 도서삭제버튼
-			int result = JOptionPane.showConfirmDialog(null, "정말로 삭제하시겠습니까?", "삭제", JOptionPane.YES_NO_OPTION);
-			if (JOptionPane.YES_OPTION == result) {
-
+		if (e.getSource() == B_DELETE) {
+			if (delete_return.getSelectedRowCount()==0) {
+				JOptionPane.showMessageDialog(this, "선택된 도서가 없습니다.\n 하나 이상 선택해 주세요.");
+			}else{
+				int row=delete_return.getSelectedRow();
+				String bookRental_id=(String) delete_return.getValueAt(row, 0);
+				if(bd.updateReceiveDate(bookRental_id)) {
+					JOptionPane.showMessageDialog(this, "삭제가 완료되었습니다.");
+				}else {
+					JOptionPane.showMessageDialog(this, "삭제실패","에러",JOptionPane.ERROR_MESSAGE);;
+				}
+				
 			}
 		}
 		if (e.getSource() == P1_RENTAL_BUTTON || e.getSource() == P1_RETAL_TXTF) {
