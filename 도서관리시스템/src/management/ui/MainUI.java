@@ -135,6 +135,7 @@ public class MainUI extends JFrame implements ActionListener {
 		B_INPUT = new JButton("\uC9C1\uC811 \uC785\uB825");
 		B_INPUT.addActionListener(this);
 		REGISTER_MAIN.add(B_INPUT);
+		//new **ListUI(); 이런식으로 써서 클래스로 바로연결
 		
 		panel = new JPanel();
 		panel.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
