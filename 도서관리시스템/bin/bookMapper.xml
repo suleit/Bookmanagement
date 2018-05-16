@@ -85,12 +85,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="rentalBookhistory" parameterType="map">
 	insert into bookrentalhistory (rental_id, book_id, rental_date, rentaluser_id) 
-	values((select nvl(max(rental_id),'0')+1 from bookrental),#{book_id},sysdate,#{user_id})
+	values((select nvl(max(rental_id),'0')+1 from bookrentalhistory),#{book_id},sysdate,#{user_id})
 	</insert>
 	
 	<insert id="rentalBook" parameterType="map">
 	insert into bookrental (rental_id, book_id, rental_date, rentaluser_id) 
-	values((select nvl(max(rental_id),'0')+1 from bookrental),#{book_id},sysdate,#{user_id})
+	values((select nvl(max(rental_id),'0')+1 from bookrentalhistory),#{book_id},sysdate,#{user_id})
 	</insert>
 	
 	<update id="updateReceiveDate" parameterType="String">
@@ -104,6 +104,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<update id="updateReserve" parameterType="map">
 	update bookrental set reserve_id = #{user_id} where rental_id = #{bookrental_id}
+	</update>
+	
+	<update id="updateReserveHistory" parameterType="map">
+	update bookrentalhistory set reserve_id = #{user_id} where rental_id = #{bookrental_id}
 	</update>
 	
 </mapper>

@@ -102,9 +102,16 @@ public interface BookMapper {
 	public int deleteBookRental(String bookrental_id);
 	
 	/**
-	 *  예약자 아이디 업데이트하기 
+	 *  rental테이블에 예약자 아이디 업데이트하기 
 	 * @param bookrental_id
 	 * @return
 	 */
 	public int updateReserve(@Param("bookrental_id")String bookrental_id, @Param("user_id")String user_id);
+	/**
+	 * rentalhistory 테이블에 예약자 아이디 업데이트하기
+	 * @param bookrental_id
+	 * @param user_id
+	 * @return
+	 */
+	public int updateReserveHistory(@Param("bookrental_id")String bookrental_id, @Param("user_id")String user_id);
 }

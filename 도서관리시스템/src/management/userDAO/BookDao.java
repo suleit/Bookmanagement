@@ -79,6 +79,28 @@ public class BookDao {
 		return result;		
 	}
 	
+	public boolean rentalBookhistory(String book_id, String user_id) {
+		SqlSession session=null;
+		boolean result=false;
+		int cnt=0;
+		
+		try {
+			session= factory.openSession();
+			BookMapper mapper= session.getMapper(BookMapper.class);
+			cnt= mapper.rentalBookhistory(book_id, user_id);
+			if(cnt>0) {
+				result=true;
+			}
+			session.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null)session.close();
+		}
+		return result;	
+	}
+	
 	public boolean rentalBook(String book_id, String user_id) {
 		SqlSession session=null;
 		boolean result=false;
@@ -100,6 +122,28 @@ public class BookDao {
 		}
 		return result;	
 	}
+	public boolean deleteBookRental(String bookrental_id) {
+		SqlSession session=null;
+		boolean result=false;
+		int cnt=0;
+		
+		try {
+			session= factory.openSession();
+			BookMapper mapper= session.getMapper(BookMapper.class);
+			cnt= mapper.deleteBookRental(bookrental_id);
+			if(cnt>0) {
+				result=true;
+			}
+			session.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null)session.close();
+		}
+		return result;	
+	}
+	
 	
 	public boolean updateReceiveDate(String bookrental_id) {
 		SqlSession session=null;
@@ -122,6 +166,28 @@ public class BookDao {
 		}
 		return result;	
 	}
+	public boolean updateReserveHistory(String bookrental_id, String user_id) {
+		SqlSession session=null;
+		boolean result=false;
+		int cnt=0;
+		
+		try {
+			session= factory.openSession();
+			BookMapper mapper= session.getMapper(BookMapper.class);
+			cnt= mapper.updateReserveHistory(bookrental_id, user_id);
+			if(cnt>0) {
+				result=true;
+			}
+			session.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null)session.close();
+		}
+		return result;
+	}
+	
 	
 	public boolean updateReserve(String bookrental_id, String user_id) {
 		SqlSession session=null;
