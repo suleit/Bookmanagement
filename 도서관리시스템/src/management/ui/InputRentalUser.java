@@ -97,7 +97,7 @@ public class InputRentalUser extends JFrame implements ActionListener {
 			result2 = dao.updateReserveHistory(id, user_id);
 		}
 		
-		if(result&&result2) {
+		if(result&&result2) {   
 			System.out.println(result);
 			System.out.println(result2);
 			JOptionPane.showMessageDialog(this,"대여/예약 신청이 완료되었습니다.");
