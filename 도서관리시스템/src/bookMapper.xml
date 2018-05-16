@@ -25,11 +25,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="findbook" parameterType="String" resultType="Book">
 	select b.book_id, b.title, b.publisher, nvl(f.name,' ' )as rental_name, nvl(s.name, ' ') as reserve_name, 
-	r.rental_date, r.receive_date, r.overdue_date
+	r.rental_date, r.overdue_date as overdue
  	from book b left outer join bookrental r on b.book_id=r.book_id 
  	left outer join bookuser f on r.rentalUser_id=f.user_id
  	left outer join bookuser s on r.reserve_id=s.user_id
 	where lower(b.title) like lower('%'|| #{title} || '%') 
+	order by to_number(b.book_id)
 	</select>
 	
 	<delete id="deletebook" parameterType="String">
@@ -42,8 +43,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="findRentalBook" resultType="Book">
-	select r.rental_id, b.book_id, b.title, b.publisher, nvl(f.name,' ' )as rental_name, nvl(s.name, ' ') as reserve_name, 
-	r.rental_date, r.overdue_date
+	select r.rental_id as bookrental_id, b.book_id, b.title, b.publisher, nvl(f.name,' ' )as rental_name, nvl(s.name, ' ') as reserve_name, 
+	r.rental_date, r.overdue_date as overdue
  	from book b join bookrental r on b.book_id=r.book_id 
  	left outer join bookuser f on r.rentalUser_id=f.user_id
  	left outer join bookuser s on r.reserve_id=s.user_id
@@ -51,35 +52,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="findOverdueBook" resultType="DBvo">
-	select r.rental_id as bookrental_id, b.book_id, b.title, b.publisher, f.name as "rental_name",r.rentalUser_id as rental_id, f.gisu, 
+	select r.rental_id as bookrental_id, b.book_id, b.title, b.publisher, 
+	f.name as "rental_name",r.rentalUser_id as rental_id, f.gisu, 
 	f.class as classname, r.rental_date, r.overdue_date as overdue
 	from book b join bookrental r on b.book_id=r.book_id 
 	left outer join bookuser f on r.rentalUser_id=f.user_id 
 	left outer join bookuser s on r.reserve_id=s.user_id
-	where r.overdue_date>0 and r.receive_date is null
+	where r.overdue_date>0
 	order by to_number(r.rental_id)
 	</select>
 	
 	<select id="findBookForRent" parameterType="String" resultType="Book">
-	select b.book_id, b.title, b.publisher, nvl(f.name,' ' )as rental_name, nvl(s.name, ' ') as reserve_name, 
-	r.rental_date, r.overdue_date
+	select r.rental_id as bookrental_id, b.book_id, b.title, b.publisher, nvl(f.name,' ' )as rental_name, 
+	nvl(s.name, ' ') as reserve_name, r.rental_date, r.overdue_date
  	from book b full outer join bookrental r on b.book_id=r.book_id 
  	left outer join bookuser f on r.rentalUser_id=f.user_id
  	left outer join bookuser s on r.reserve_id=s.user_id
  	where lower(b.title) like lower('%'|| #{title} || '%') 
-	and r.receive_date is null 
 	and r.reserve_id is null
 	order by to_number(b.book_id)
 	</select>
 	
 	<select id="findBookForReturn" parameterType="String" resultType="Book">
- 	select r.rental_id as bookrental_id, b.book_id, b.title, b.publisher, nvl(f.name,' ' )as rental_name, nvl(s.name, ' ') as reserve_name, 
-	r.rental_date, r.overdue_date
+ 	select r.rental_id as bookrental_id, b.book_id, b.title, b.publisher, nvl(f.name,' ' )as rental_name, 
+ 	nvl(s.name, ' ') as reserve_name, r.rental_date, r.overdue_date
  	from book b join bookrental r on b.book_id=r.book_id 
  	left outer join bookuser f on r.rentalUser_id=f.user_id
  	left outer join bookuser s on r.reserve_id=s.user_id
 	where f.name= #{rental_name}
-	and r.receive_date is null and r.rental_date is not null
+	and r.rental_date is not null
 	</select>
 	
 	<insert id="rentalBookhistory" parameterType="map">
