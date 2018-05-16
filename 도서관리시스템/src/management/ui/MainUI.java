@@ -158,45 +158,19 @@ public class MainUI extends JFrame implements ActionListener {
 		P1_DELETEMAIN = new JPanel();
 		DELETE_MAIN.add(P1_DELETEMAIN, BorderLayout.NORTH);
 		P1_DELETEMAIN.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		P1_Label = new JLabel("\uB3C4\uC11C\uC81C\uBAA9");
+		P1_DELETEMAIN.add(P1_Label);
 
-		panel = new JPanel();
-		P1_DELETEMAIN.add(panel);
-		panel.setLayout(new BorderLayout(0, 0));
-
-		lblNewLabel = new JLabel("\uB3C4\uC11C\uC81C\uBAA9");
-		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblNewLabel);
-
-		JTextField DM_TXTF = new JTextField();
-		P1_DELETEMAIN.add(DM_TXTF);
-		DM_TXTF.setColumns(20);
-
-		panel_1 = new JPanel();
-		P1_DELETEMAIN.add(panel_1);
-		panel_1.setLayout(new BorderLayout(0, 0));
-
-		panel_3 = new JPanel();
-		panel_1.add(panel_3);
-		panel_3.setLayout(null);
-
-		textField = new JTextField();
-		textField.setBounds(0, 0, 152, 123);
-		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_3.add(textField);
-		textField.setColumns(10);
-
-		panel_2 = new JPanel();
-		P1_DELETEMAIN.add(panel_2);
-		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		panel_4 = new JPanel();
-		panel_2.add(panel_4);
-		panel_4.setLayout(new BorderLayout(0, 0));
-
+		P1_TXTF = new JTextField();
+		P1_TXTF.addActionListener(this);
+		P1_DELETEMAIN.add(P1_TXTF);
+		P1_TXTF.setColumns(20);		
+		
 		button = new JButton("\uAC80\uC0C9");
+		P1_DELETEMAIN.add(button);
+		button.addActionListener(this);
 		button.setAlignmentX(10.0f);
-		panel_2.add(button);
 		button.setHorizontalTextPosition(SwingConstants.CENTER);
 
 		P2_DELETEMAIN = new JPanel();
@@ -409,13 +383,15 @@ public class MainUI extends JFrame implements ActionListener {
 	private BookDao bd = new BookDao();
 	private DefaultTableModel model, model2, modelP3, model_delete;
 	private JTable table_rental, table_return, p3_tables;
-	private JTable delete_return;
+
 	private JPanel panel_1, panel_2, panel_3, panel_4, panel_findbook;
 	private JLabel lblNewLabel;
-	private JTextField textField, findbook_tf;
+	private JTextField textField, findbook_tf, P1_TXTF;
 	private JButton button, b_findbook;
-	private List<Book> booksforRental, booksforReturn, booksforViewP3;
-	private JScrollPane rental_table_sc, return_table_sc, p3_sc;
+	private JTable delete_table, delete_return;//추가...
+	private List<Book> booksforRental, booksforReturn, booksforViewP3, booksforDelete;
+	private JScrollPane rental_table_sc, return_table_sc, p3_sc, delete_table_sc;
+	private JLabel P1_Label;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -443,13 +419,49 @@ public class MainUI extends JFrame implements ActionListener {
 			iu = new InputUI();
 		}
 
+		if (e.getSource() == button || e.getSource() == P1_TXTF) {
+			String bookname = P1_TXTF.getText();
+			if (table_rental != null) {
+				P2_DELETEMAIN.remove(delete_table_sc);
+			}
+			delete_table = new JTable();
+			if (model_delete != null)
+				model_delete.setRowCount(0);
+			booksforDelete = bd.findBookForRent(bookname);
+			if (booksforDelete != null) {
+				int rows = booksforDelete.size();
+				if (rows > 0) {
+					Object[][] objs = new Object[rows][7];
+					for (int i = 0; i < booksforDelete.size(); i++) {
+						objs[i][0] = booksforDelete.get(i).getBook_id();
+						objs[i][1] = booksforDelete.get(i).getTitle();
+						objs[i][2] = booksforDelete.get(i).getPublisher();
+						objs[i][3] = booksforDelete.get(i).getRental_name();
+						objs[i][4] = booksforDelete.get(i).getReserve_name();
+						objs[i][5] = booksforDelete.get(i).getOverdue();
+					}
+
+					model_delete = new DefaultTableModel(objs,
+							new String[] { "book.NO", "도서제목", "출판사", "대여자명", "예약자명", "연체일자" });
+					delete_table.setModel(model_delete);
+				}
+				delete_table_sc = new JScrollPane(delete_table);
+
+				P2_DELETEMAIN.add(delete_table_sc);
+			} else {
+				P2_DELETEMAIN.add(new JLabel("찾으시는 도서가 존재하지 않습니다."));
+			}
+		}//삭제쪽 검색
+		
 		if (e.getSource() == B_DELETE) {
 			if (delete_return.getSelectedRowCount() == 0) {
 				JOptionPane.showMessageDialog(this, "선택된 도서가 없습니다.\n 하나 이상 선택해 주세요.");
+
 			} else {
 				int row = delete_return.getSelectedRow();
 				String bookRental_id = (String) delete_return.getValueAt(row, 0);
 				if (bd.updateReceiveDate(bookRental_id)) {
+
 					JOptionPane.showMessageDialog(this, "삭제가 완료되었습니다.");
 				} else {
 					JOptionPane.showMessageDialog(this, "삭제실패", "에러", JOptionPane.ERROR_MESSAGE);
