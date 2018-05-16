@@ -36,6 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	from book b left outer join bookrental r on b.book_id=r.book_id 
  	left outer join bookuser f on r.rentalUser_id=f.user_id
  	left outer join bookuser s on r.reserve_id=s.user_id
+ 	order by b.book_id
 	</select>
 	
 	<select id="findRentalBook" resultType="Book">
@@ -65,15 +66,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	where lower(b.title) like lower('%'|| #{title} || '%') 
 	and r.receive_date is null 
 	and r.reserve_id is null
+	order by b.book_id
 	</select>
 	
 	<select id="findBookForReturn" parameterType="String" resultType="Book">
-	select r.rental_id as bookrental_id, b.book_id, b.title, b.publisher, nvl(f.name,' ' )as rental_name, nvl(s.name, ' ') as reserve_name, 
+ 	select r.rental_id as bookrental_id, b.book_id, b.title, b.publisher, nvl(f.name,' ' )as rental_name, nvl(s.name, ' ') as reserve_name, 
 	r.rental_date, r.receive_date, r.overdue_date
  	from book b join bookrental r on b.book_id=r.book_id 
  	left outer join bookuser f on r.rentalUser_id=f.user_id
  	left outer join bookuser s on r.reserve_id=s.user_id
-	where  lower(b.title) like lower('%'|| #{title} || '%') 
+	where f.name= #{rental_name}
 	and r.receive_date is null and r.rental_date is not null
 	</select>
 	

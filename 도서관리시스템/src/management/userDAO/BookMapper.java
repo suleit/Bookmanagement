@@ -62,12 +62,12 @@ public interface BookMapper {
 	 */
 	public ArrayList<Book> findBookForRent(String title);
 	/**
-	 *  반납할 책 검색- 이름으로
+	 *  반납할 책 검색- 대여자 이름으로
 	 *  반납일이 null인 것만 검색 
-	 * @param title
+	 * @param rental_name
 	 * @return
 	 */
-	public ArrayList<Book> findBookForReturn(String title);
+	public ArrayList<Book> findBookForReturn(@Param("rental_name")String rental_name);
 	/**
 	 * 책 대여하기 jtable을 선택한 값에서 매개변수 따올것 
 	 * @param book_id

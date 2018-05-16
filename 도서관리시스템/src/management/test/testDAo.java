@@ -24,19 +24,19 @@ public class testDAo {
 		}// for
 */		
 		
-		ArrayList<Book>books= bd.findBookForReturn("");
+/*		ArrayList<Book>books= bd.findBookForReturn("°ü¸®ÀÚ");
 		
 		for (Book b : books) {
 			System.out.println(b);
 		}
+*/		
+//		User u1=bd.findUser("sul");
+	//	System.out.println(u1);
 		
-/*		User u1=bd.findUser("sul");
-		System.out.println(u1);
-		
-		boolean result=bd.updateReserve("2", "bong");
+		boolean result=bd.updateReceiveDate("6");
 		
 		System.out.println(result);
-*/		
+		
 		
 
 		

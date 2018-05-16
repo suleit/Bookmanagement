@@ -253,7 +253,7 @@ public class BookDao {
 		try {
 			session= factory.openSession();
 			BookMapper mapper= session.getMapper(BookMapper.class);
-			books=mapper.findBookForRent(title);
+			books=mapper.findBookForReturn(title);
 				
 		} catch (Exception e) {
 			e.printStackTrace();
