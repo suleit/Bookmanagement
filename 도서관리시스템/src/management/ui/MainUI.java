@@ -84,6 +84,7 @@ public class MainUI extends JFrame implements ActionListener {
 		P_MANAGEMENT.setLayout(null);
 		
 		textPane = new JTextPane();
+		textPane.setEditable(false);
 		textPane.setFont(new Font("±¼¸²", Font.BOLD, 28));
 		textPane.setBounds(123, 210, 248, 262);
 		textPane.setText("     \uB3C4\uC11C\uAD00\uB9AC\r\n\r\n1. \uC2E0\uADDC\uB3C4\uC11C \uB4F1\uB85D\r\n2. \uD3D0\uAE30\uB3C4\uC11C \uC0AD\uC81C");
@@ -95,10 +96,11 @@ public class MainUI extends JFrame implements ActionListener {
 		P_PRINT.setLayout(null);
 
 		PRINT_TXT = new JTextPane();
+		PRINT_TXT.setEditable(false);
 		PRINT_TXT.setFont(new Font("±¼¸²", Font.BOLD, 28));
 		PRINT_TXT.setBounds(88, 210, 320, 262);
 		PRINT_TXT.setText(
-				"      \uB3C4\uC11C\uBAA9\uB85D \uCD9C\uB825\r\n\r\n   1. \uB3C4\uC11C\uC815\uBCF4 \uCD9C\uB825\r\n2. \uB300\uCD9C\uC911\uC778 \uB3C4\uC11C \uC815\uBCF4\r\n 3. \uC5F0\uC81C\uC911\uC778 \uB3C4\uC11C\uC815\uBCF4");
+				"      \uB3C4\uC11C\uBAA9\uB85D \uCD9C\uB825\r\n\r\n   1. \uB3C4\uC11C\uC815\uBCF4 \uCD9C\uB825\r\n2. \uB300\uCD9C\uC911\uC778 \uB3C4\uC11C \uC815\uBCF4\r\n 3. \uC5F0\uC81C\uC911\uC778 \uB3C4\uC11C\uC815\uBCF4\r\n    4. \uB3C4\uC11C\uC815\uBCF4 \uAC80\uC0C9");
 		P_PRINT.add(PRINT_TXT);
 
 		P_RENTAL = new JPanel();
@@ -107,6 +109,7 @@ public class MainUI extends JFrame implements ActionListener {
 		P_RENTAL.setLayout(null);
 
 		RENTAL_TXT = new JTextPane();
+		RENTAL_TXT.setEditable(false);
 		RENTAL_TXT.setFont(new Font("±¼¸²", Font.BOLD, 28));
 		RENTAL_TXT.setBounds(192, 220, 131, 262);
 		RENTAL_TXT.setText("\uB300\uCD9C\uAD00\uB9AC\r\n\r\n 1. \uB300\uC5EC\r\n 2. \uBC18\uB0A9");
@@ -144,7 +147,7 @@ public class MainUI extends JFrame implements ActionListener {
 		P_InputCenter = new JPanel();
 		P_InputCenter.setAlignmentY(1.0f);
 		P_InputCenter.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 100));
-		JLabel introduction=new JLabel("<html>\uC9C1\uC811\uC785\uB825 : \uC9C1\uC811 \uC785\uB825\uC73C\uB85C \uC18C\uB7C9 \uB4F1\uB85D<br><br>\uC5D1\uC140\uD30C\uC77C \uC5C5\uB85C\uB4DC : \uB300\uB7C9\uC758 \uCC45\uC744 \uD55C\uBC88\uC5D0 \uB4F1\uB85D \uAC00\uB2A5<br><br>[\uC785\uB825 \uC608\uC2DC]<br>1\uD589 : \uCC45\uC774\uB984 | \uCD9C\uD310\uC0AC <br>2\uD589: JLPT\uB2E8\uC5B4\uC7A5|\uC2DC\uC0AC\uC77C\uBCF8\uC5B4\uC0AC<br><br>**\uC8FC\uC758\uC0AC\uD56D: \uB3D9\uC77C\uD55C \uCC45\uC774 \uC5EC\uB7EC\uAD8C\uC778 \uACBD\uC6B0\uB294 \uAC19\uC740 \uB0B4\uC6A9\uC758 \uD589\uC744 \uD574\uB2F9 \uAD8C\uC218\uB9CC\uD07C \uC0BD\uC785**<br></html>");
+		JLabel introduction=new JLabel("<html>\uC9C1\uC811\uC785\uB825 : \uC9C1\uC811 \uC785\uB825\uC73C\uB85C \uC18C\uB7C9 \uB4F1\uB85D<br><br>\uC5D1\uC140\uD30C\uC77C \uC5C5\uB85C\uB4DC : \uB300\uB7C9\uC758 \uCC45\uC744 \uD55C\uBC88\uC5D0 \uB4F1\uB85D \uAC00\uB2A5<br><br>[\uC785\uB825 \uC608\uC2DC]<br>1\uD589 : \uCC45\uC774\uB984 | \uCD9C\uD310\uC0AC <br>2\uD589: JLPT\uB2E8\uC5B4\uC7A5|\uC2DC\uC0AC\uC77C\uBCF8\uC5B4\uC0AC<br><br>**\uC8FC\uC758\uC0AC\uD56D: \uB3D9\uC77C\uD55C \uCC45\uC774 \uC5EC\uB7EC\uAD8C\uC778 \uACBD\uC6B0\uB294 \uAC19\uC740 \uB0B4\uC6A9\uC758 \uD589\uC744 \uD574\uB2F9 \uAD8C\uC218\uB9CC\uD07C \uC0BD\uC785**<br><br>**xls\uC591\uC2DD\uC73C\uB85C\uB9CC \uC5C5\uB85C\uB4DC \uAC00\uB2A5**<br></html>");
 		introduction.setBounds(new Rectangle(0, 0, 6, 0));
 		introduction.setFont(new Font("±¼¸²", Font.BOLD, 16));
 		P_InputCenter.add(introduction);
