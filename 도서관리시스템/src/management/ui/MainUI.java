@@ -584,12 +584,12 @@ public class MainUI extends JFrame implements ActionListener {
 							new String[] { "대여번호", "book.NO", "도서제목", "출판사", "대여자명", "대여일시", "예약자명", "연체일자" });
 					table_return.setModel(model2);
 				} else {
-					P2_RETURN.add(new JLabel("해당 이용자는 현재 대여중인 책이 없습니다."));
+					JOptionPane.showMessageDialog(this, "해당 이용자는 현재 대여중인 책이 없습니다.");
 				}
 				return_table_sc = new JScrollPane(table_return);
 				P2_RETURN.add(return_table_sc);
 			} else {
-				P2_RETURN.add(new JLabel("해당 이용자는 현재 대여중인 책이 없습니다."));
+				JOptionPane.showMessageDialog(this, "해당 이용자는 현재 대여중인 책이 없습니다.");
 			}
 		} // 반납조회 이벤트 종료
 

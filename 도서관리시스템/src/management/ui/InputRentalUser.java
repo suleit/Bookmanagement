@@ -108,6 +108,5 @@ public class InputRentalUser extends JFrame implements ActionListener {
 			System.out.println(result2);
 			JOptionPane.showMessageDialog(this,"대여/예약 신청 에러");
 		}
-
 	}
 }
