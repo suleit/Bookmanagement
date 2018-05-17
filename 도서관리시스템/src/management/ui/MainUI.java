@@ -385,11 +385,10 @@ public class MainUI extends JFrame implements ActionListener {
 	private DefaultTableModel model, model2, modelP3, model_delete;
 	private JTable table_rental, table_return, p3_tables;
 
-	private JPanel panel_1, panel_2, panel_3, panel_4, panel_findbook;
-	private JLabel lblNewLabel;
-	private JTextField textField, findbook_tf, P1_TXTF;
+	private JPanel panel_findbook;
+	private JTextField findbook_tf, P1_TXTF;
 	private JButton button, b_findbook;
-	private JTable delete_table, delete_return;// 추가...
+	private JTable delete_table;// 추가...
 	private List<Book> booksforRental, booksforReturn, booksforViewP3, booksforDelete;
 	private JScrollPane rental_table_sc, return_table_sc, p3_sc, delete_table_sc;
 	private JLabel P1_Label;
@@ -457,8 +456,8 @@ public class MainUI extends JFrame implements ActionListener {
 					if (inputUser != null)
 						inputUser.dispose();
 					String bookname = (String) table_rental.getValueAt(row, 1);
-					String book_id = (String) table_rental.getValueAt(row, 0);
-					inputUser = new InputRentalUser(bookname, book_id, 0);
+					String bookrental_id = (String) table_rental.getValueAt(row, 7);
+					inputUser = new InputRentalUser(bookname, bookrental_id, 0);
 				}
 
 			}
@@ -466,13 +465,18 @@ public class MainUI extends JFrame implements ActionListener {
 
 		if (e.getSource() == button || e.getSource() == P1_TXTF) {
 			String bookname = P1_TXTF.getText();
-				P2_DELETEMAIN.removeAll();
+			P2_DELETEMAIN.removeAll();
 			delete_table = new JTable();
 			if (model_delete != null)
 				model_delete.setRowCount(0);
 			booksforDelete = bd.findBook(bookname);
+			System.out.println(booksforDelete);
+			
 			if (booksforDelete != null) {
 				int rows = booksforDelete.size();
+				
+				System.out.println(rows);
+				
 				if (rows > 0) {
 					Object[][] objs = new Object[rows][7];
 					for (int i = 0; i < booksforDelete.size(); i++) {
@@ -487,30 +491,35 @@ public class MainUI extends JFrame implements ActionListener {
 					model_delete = new DefaultTableModel(objs,
 							new String[] { "book.NO", "도서제목", "출판사", "대여자명", "예약자명", "연체일자" });
 					delete_table.setModel(model_delete);
+				} else {
+					JOptionPane.showMessageDialog(this, "찾으시는 책이 존재하지 않습니다.");
 				}
 				delete_table_sc = new JScrollPane(delete_table);
 
 				P2_DELETEMAIN.add(delete_table_sc);
+				delete_table.updateUI();
+				delete_table_sc.updateUI();
 			} else {
-				P2_DELETEMAIN.add(new JLabel("찾으시는 도서가 존재하지 않습니다."));
+				JOptionPane.showMessageDialog(this, "찾으시는 책이 존재하지 않습니다.");
 			}
+
 		} // 삭제쪽 검색
 
 		if (e.getSource() == B_DELETE) {
-			if (delete_return.getSelectedRowCount() == 0) {
+			if (delete_table.getSelectedRowCount() == 0) {
 				JOptionPane.showMessageDialog(this, "선택된 도서가 없습니다.\n 하나 이상 선택해 주세요.");
 
 			} else {
-				int row = delete_return.getSelectedRow();
-				String book_id = (String) delete_return.getValueAt(row, 0);
+				int row = delete_table.getSelectedRow();
+				String book_id = (String) delete_table.getValueAt(row, 0);
 				if (bd.deleteBook(book_id)) {
 					JOptionPane.showMessageDialog(this, "삭제가 완료되었습니다.");
 				} else {
 					JOptionPane.showMessageDialog(this, "삭제실패", "에러", JOptionPane.ERROR_MESSAGE);
 				}
 			}
-		}//삭제
-		
+		} // 삭제
+
 		if (e.getSource() == P1_RENTAL_BUTTON || e.getSource() == P1_RETAL_TXTF) {
 			String bookname = P1_RETAL_TXTF.getText();
 			P2_RENTALMAIN.removeAll();
@@ -537,15 +546,17 @@ public class MainUI extends JFrame implements ActionListener {
 					model = new DefaultTableModel(objs,
 							new String[] { "book.NO", "도서제목", "출판사", "대여자명", "대여일시", "예약자명", "연체일자", "대여번호" });
 					table_rental.setModel(model);
+				}else {
+					JOptionPane.showMessageDialog(this, "찾으시는 도서가  존재하지 않거나 대여 및 예약이 꽉 차있습니다.");
 				}
 				rental_table_sc = new JScrollPane(table_rental);
 
 				P2_RENTALMAIN.add(rental_table_sc);
 			} else {
-				P2_RENTALMAIN.add(new JLabel("찾으시는 도서가 현재 대여/예약 중이거나 존재하지 않습니다."));
+				JOptionPane.showMessageDialog(this, "찾으시는 도서가  존재하지 않거나 대여 및 예약이 꽉 차있습니다.");
 			}
 		} // 대여버튼 이벤트 종료
-		
+
 		if (e.getSource() == P1_RETURN_find_BUTTON || e.getSource() == P1_RETURN_TXTF) {
 			String username = P1_RETURN_TXTF.getText();
 			P2_RETURN.removeAll();
@@ -581,7 +592,7 @@ public class MainUI extends JFrame implements ActionListener {
 				P2_RETURN.add(new JLabel("해당 이용자는 현재 대여중인 책이 없습니다."));
 			}
 		} // 반납조회 이벤트 종료
-		
+
 		if (e.getSource() == RETURN_BUTTON) {
 			if (table_return.getSelectedRowCount() == 0) {
 				JOptionPane.showMessageDialog(this, "선택된 도서가 없습니다.\n 하나 이상 선택해 주세요.");
@@ -684,12 +695,12 @@ public class MainUI extends JFrame implements ActionListener {
 							new String[] { "도서제목", "출판사", "대여일시", "연체일자", "대여자명", "대여자ID", "기수", "반" });
 					p3_tables.setModel(modelP3);
 				} else {
-					NO3_Panel2.add(new JLabel("현재 연체중인 책이 없습니다."));
+					JOptionPane.showMessageDialog(this, "현재 연체중인 책이 없습니다.");
 				}
 				p3_sc = new JScrollPane(p3_tables);
 				NO3_Panel2.add(p3_sc);
 			} else {
-				NO3_Panel2.add(new JLabel("현재 연체중인 책이 없습니다."));
+				JOptionPane.showMessageDialog(this, "현재 연체중인 책이 없습니다.");
 			}
 		} // 버튼 3 연체정보 출력
 

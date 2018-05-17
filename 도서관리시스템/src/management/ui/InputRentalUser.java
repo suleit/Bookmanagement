@@ -88,6 +88,7 @@ public class InputRentalUser extends JFrame implements ActionListener {
 		String user_id = tf_input.getText();
 		
 		System.out.println(user_id);
+		System.out.println(id);
 		
 		if (status == 1) {// 1이면 대여
 			result = dao.rentalBook(id, user_id);
