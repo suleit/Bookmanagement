@@ -33,6 +33,7 @@ import management.userDAO.BookMapper;
 import management.vo.Book;
 import management.vo.DBvo;
 import java.awt.Rectangle;
+import javax.swing.JTextArea;
 
 public class MainUI extends JFrame implements ActionListener {
 	public MainUI() {
@@ -80,17 +81,22 @@ public class MainUI extends JFrame implements ActionListener {
 		P_MANAGEMENT = new JPanel();
 		P_MANAGEMENT.setBorder(new LineBorder(new Color(0, 0, 0)));
 		NO1_MAIN.add(P_MANAGEMENT);
-
-		MANAGEMENT_TXT = new JTextPane();
-		MANAGEMENT_TXT.setText(
-				"      \uB3C4\uC11C\uAD00\uB9AC\r\n\r\n1. \uC2E0\uADDC \uB3C4\uC11C \uB4F1\uB85D\r\n2. \uD3D0\uAE30 \uB3C4\uC11C \uC0AD\uC81C");
-		P_MANAGEMENT.add(MANAGEMENT_TXT);
+		P_MANAGEMENT.setLayout(null);
+		
+		textPane = new JTextPane();
+		textPane.setFont(new Font("굴림", Font.BOLD, 28));
+		textPane.setBounds(123, 210, 248, 262);
+		textPane.setText("     \uB3C4\uC11C\uAD00\uB9AC\r\n\r\n1. \uC2E0\uADDC\uB3C4\uC11C \uB4F1\uB85D\r\n2. \uD3D0\uAE30\uB3C4\uC11C \uC0AD\uC81C");
+		P_MANAGEMENT.add(textPane);
 
 		P_PRINT = new JPanel();
 		P_PRINT.setBorder(new MatteBorder(1, 0, 1, 1, (Color) new Color(0, 0, 0)));
 		NO1_MAIN.add(P_PRINT);
+		P_PRINT.setLayout(null);
 
 		PRINT_TXT = new JTextPane();
+		PRINT_TXT.setFont(new Font("굴림", Font.BOLD, 28));
+		PRINT_TXT.setBounds(88, 210, 320, 262);
 		PRINT_TXT.setText(
 				"      \uB3C4\uC11C\uBAA9\uB85D \uCD9C\uB825\r\n\r\n   1. \uB3C4\uC11C\uC815\uBCF4 \uCD9C\uB825\r\n2. \uB300\uCD9C\uC911\uC778 \uB3C4\uC11C \uC815\uBCF4\r\n 3. \uC5F0\uC81C\uC911\uC778 \uB3C4\uC11C\uC815\uBCF4");
 		P_PRINT.add(PRINT_TXT);
@@ -98,8 +104,11 @@ public class MainUI extends JFrame implements ActionListener {
 		P_RENTAL = new JPanel();
 		P_RENTAL.setBorder(new MatteBorder(1, 0, 1, 1, (Color) new Color(0, 0, 0)));
 		NO1_MAIN.add(P_RENTAL);
+		P_RENTAL.setLayout(null);
 
 		RENTAL_TXT = new JTextPane();
+		RENTAL_TXT.setFont(new Font("굴림", Font.BOLD, 28));
+		RENTAL_TXT.setBounds(192, 220, 131, 262);
 		RENTAL_TXT.setText("\uB300\uCD9C\uAD00\uB9AC\r\n\r\n 1. \uB300\uC5EC\r\n 2. \uBC18\uB0A9");
 		P_RENTAL.add(RENTAL_TXT);
 
@@ -205,10 +214,8 @@ public class MainUI extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == NO3_Button1) {
-					if (p3_tables != null || panel_findbook != null) {
 						NO3_Panel2.removeAll();
 						NO3_Panel2.validate();
-					}
 					p3_tables = new JTable();
 					if (modelP3 != null)
 						modelP3.setRowCount(0);
@@ -241,10 +248,8 @@ public class MainUI extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == NO3_Button2) {
 
-					if (p3_tables != null || panel_findbook != null) {
 						NO3_Panel2.removeAll();
 						NO3_Panel2.validate();
-					}
 					p3_tables = new JTable();
 					if (modelP3 != null)
 						modelP3.setRowCount(0);
@@ -465,7 +470,6 @@ public class MainUI extends JFrame implements ActionListener {
 	private JPanel P_RENTAL;
 	private JLabel INTRO_LABEL;
 	private JTextPane PRINT_TXT;
-	private JTextPane MANAGEMENT_TXT;
 	private JTextPane RENTAL_TXT;
 	private JPanel P_NewBook;
 
@@ -481,6 +485,7 @@ public class MainUI extends JFrame implements ActionListener {
 	private JLabel P1_Label;
 	private JPanel P_InputCenter;
 	private JButton b_upload;
+	private JTextPane textPane;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -538,7 +543,7 @@ public class MainUI extends JFrame implements ActionListener {
 				
 				
 				InputRentalUser inputUser = null;
-				String rental_date = (String) table_rental.getValueAt(row, 4);
+				String rental_date = (String) table_rental.getValueAt(row,4);
 				String reserve_name= (String) table_rental.getValueAt(row,5);	
 				System.out.println("대여일"+rental_date);
 				System.out.println("예약자명"+reserve_name);
@@ -798,5 +803,4 @@ public class MainUI extends JFrame implements ActionListener {
 		}// 4번째 버튼 누른 후 책 검색버튼 이벤트
 
 	}
-
 }
