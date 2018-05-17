@@ -32,6 +32,7 @@ import management.userDAO.BookDao;
 import management.userDAO.BookMapper;
 import management.vo.Book;
 import management.vo.DBvo;
+import java.awt.Rectangle;
 
 public class MainUI extends JFrame implements ActionListener {
 	public MainUI() {
@@ -118,6 +119,9 @@ public class MainUI extends JFrame implements ActionListener {
 		B_INPUT = new JButton("\uC9C1\uC811 \uC785\uB825");
 		B_INPUT.addActionListener(this);
 		P_InputButton.add(B_INPUT);
+		
+		b_upload = new JButton("\uC5D1\uC140\uD30C\uC77C \uC5C5\uB85C\uB4DC");
+		P_InputButton.add(b_upload);
 
 		P_NewBook = new JPanel();
 		P_NewBook.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
@@ -128,6 +132,15 @@ public class MainUI extends JFrame implements ActionListener {
 		NO2p_Label.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		P_InputCenter = new JPanel();
+		P_InputCenter.setAlignmentY(1.0f);
+		P_InputCenter.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 100));
+		JLabel introduction=new JLabel("<html>\uC9C1\uC811\uC785\uB825 : \uC9C1\uC811 \uC785\uB825\uC73C\uB85C \uC18C\uB7C9 \uB4F1\uB85D<br><br>\uC5D1\uC140\uD30C\uC77C \uC5C5\uB85C\uB4DC : \uB300\uB7C9\uC758 \uCC45\uC744 \uD55C\uBC88\uC5D0 \uB4F1\uB85D \uAC00\uB2A5<br><br>[\uC785\uB825 \uC608\uC2DC]<br>1\uD589 : \uCC45\uC774\uB984 | \uCD9C\uD310\uC0AC <br>2\uD589: JLPT\uB2E8\uC5B4\uC7A5|\uC2DC\uC0AC\uC77C\uBCF8\uC5B4\uC0AC<br><br>**\uC8FC\uC758\uC0AC\uD56D: \uB3D9\uC77C\uD55C \uCC45\uC774 \uC5EC\uB7EC\uAD8C\uC778 \uACBD\uC6B0\uB294 \uAC19\uC740 \uB0B4\uC6A9\uC758 \uD589\uC744 \uD574\uB2F9 \uAD8C\uC218\uB9CC\uD07C \uC0BD\uC785**<br></html>");
+		introduction.setBounds(new Rectangle(0, 0, 6, 0));
+		introduction.setFont(new Font("±¼¸²", Font.BOLD, 18));
+		P_InputCenter.add(introduction);
+		
+		
+		
 		NO2_Panel.add(P_InputCenter, BorderLayout.CENTER);
 
 		NO2_Panel2 = new JPanel();
@@ -391,6 +404,7 @@ public class MainUI extends JFrame implements ActionListener {
 	private JScrollPane rental_table_sc, return_table_sc, p3_sc, delete_table_sc;
 	private JLabel P1_Label;
 	private JPanel P_InputCenter;
+	private JButton b_upload;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
