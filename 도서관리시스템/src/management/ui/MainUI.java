@@ -37,7 +37,7 @@ public class MainUI extends JFrame implements ActionListener {
 	public MainUI() {
 
 		setFont(new Font("Tahoma", Font.BOLD, 12));
-		setSize(new Dimension(940, 460));
+		setSize(new Dimension(1500, 900));
 		setTitle("SCIT \uB3C4\uC11C\uAD00\uB9AC\uD504\uB85C\uADF8\uB7A8");
 
 		P_NAME = new JPanel();
@@ -466,7 +466,7 @@ public class MainUI extends JFrame implements ActionListener {
 
 		if (e.getSource() == button || e.getSource() == P1_TXTF) {
 			String bookname = P1_TXTF.getText();
-			if (table_rental != null) {
+			if (delete_table != null) {
 				P2_DELETEMAIN.remove(delete_table_sc);
 			}
 			delete_table = new JTable();
@@ -512,7 +512,8 @@ public class MainUI extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(this, "삭제실패", "에러", JOptionPane.ERROR_MESSAGE);
 				}
 			}
-		}
+		}//삭제
+		
 		if (e.getSource() == P1_RENTAL_BUTTON || e.getSource() == P1_RETAL_TXTF) {
 			String bookname = P1_RETAL_TXTF.getText();
 			P2_RENTALMAIN.removeAll();
@@ -547,6 +548,7 @@ public class MainUI extends JFrame implements ActionListener {
 				P2_RENTALMAIN.add(new JLabel("찾으시는 도서가 현재 대여/예약 중이거나 존재하지 않습니다."));
 			}
 		} // 대여버튼 이벤트 종료
+		
 		if (e.getSource() == P1_RETURN_find_BUTTON || e.getSource() == P1_RETURN_TXTF) {
 			String username = P1_RETURN_TXTF.getText();
 			P2_RETURN.removeAll();
@@ -582,6 +584,7 @@ public class MainUI extends JFrame implements ActionListener {
 				P2_RETURN.add(new JLabel("해당 이용자는 현재 대여중인 책이 없습니다."));
 			}
 		} // 반납조회 이벤트 종료
+		
 		if (e.getSource() == RETURN_BUTTON) {
 			if (table_return.getSelectedRowCount() == 0) {
 				JOptionPane.showMessageDialog(this, "선택된 도서가 없습니다.\n 하나 이상 선택해 주세요.");
