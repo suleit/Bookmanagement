@@ -111,25 +111,24 @@ public class MainUI extends JFrame implements ActionListener {
 		JP_NO2.add(NO2_Panel);
 		NO2_Panel.setLayout(new BorderLayout(0, 0));
 
-		NO2p_Label = new JLabel("\uC2E0\uADDC \uB3C4\uC11C \uB4F1\uB85D");
-		NO2p_Label.setHorizontalAlignment(SwingConstants.CENTER);
-		NO2_Panel.add(NO2p_Label, BorderLayout.NORTH);
-
-		REGISTER_MAIN = new JPanel();
-		REGISTER_MAIN.setBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(0, 0, 0)));
-		NO2_Panel.add(REGISTER_MAIN, BorderLayout.SOUTH);
+		P_InputButton = new JPanel();
+		P_InputButton.setBorder(new MatteBorder(1, 0, 0, 0, (Color) new Color(0, 0, 0)));
+		NO2_Panel.add(P_InputButton, BorderLayout.SOUTH);
 
 		B_INPUT = new JButton("\uC9C1\uC811 \uC785\uB825");
 		B_INPUT.addActionListener(this);
-		REGISTER_MAIN.add(B_INPUT);
+		P_InputButton.add(B_INPUT);
 
-		panel = new JPanel();
-		panel.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
-		NO2_Panel.add(panel, BorderLayout.NORTH);
+		P_NewBook = new JPanel();
+		P_NewBook.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(0, 0, 0)));
+		NO2_Panel.add(P_NewBook, BorderLayout.NORTH);
 
 		NO2p_Label = new JLabel("\uC2E0\uADDC \uB3C4\uC11C \uB4F1\uB85D");
-		panel.add(NO2p_Label);
+		P_NewBook.add(NO2p_Label);
 		NO2p_Label.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		P_InputCenter = new JPanel();
+		NO2_Panel.add(P_InputCenter, BorderLayout.CENTER);
 
 		NO2_Panel2 = new JPanel();
 		NO2_Panel2.setBorder(new MatteBorder(1, 0, 1, 1, (Color) new Color(0, 0, 0)));
@@ -339,7 +338,7 @@ public class MainUI extends JFrame implements ActionListener {
 	private JPanel NO2_Panel;
 	private JPanel NO2_Panel2;
 	private JLabel NO2p_Label;
-	private JPanel REGISTER_MAIN;
+	private JPanel P_InputButton;
 	private JButton B_INPUT;
 	private JPanel DELETENAME;
 	private JPanel DELETE_BOTTOM;
@@ -379,7 +378,7 @@ public class MainUI extends JFrame implements ActionListener {
 	private JTextPane PRINT_TXT;
 	private JTextPane MANAGEMENT_TXT;
 	private JTextPane RENTAL_TXT;
-	private JPanel panel;
+	private JPanel P_NewBook;
 
 	private BookDao bd = new BookDao();
 	private DefaultTableModel model, model2, modelP3, model_delete;
@@ -391,6 +390,7 @@ public class MainUI extends JFrame implements ActionListener {
 	private List<Book> booksforRental, booksforReturn, booksforViewP3, booksforDelete;
 	private JScrollPane rental_table_sc, return_table_sc, p3_sc, delete_table_sc;
 	private JLabel P1_Label;
+	private JPanel P_InputCenter;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

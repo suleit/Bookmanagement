@@ -117,9 +117,7 @@ public class InputUI extends JFrame implements ActionListener {
 			Book b= new Book();
 			b.setPublisher(publisher);
 			b.setTitle(bookName);
-			
 			result=Dao.insertBook(b);
-			
 			if(result==false) {
 				break;
 			}
