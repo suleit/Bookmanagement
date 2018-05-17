@@ -69,7 +69,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	left outer join bookuser f on r.rentalUser_id=f.user_id
  	left outer join bookuser s on r.reserve_id=s.user_id
  	where lower(b.title) like lower('%'|| #{title} || '%') 
-	and r.reserve_id is null
 	order by to_number(b.book_id)
 	</select>
 	
