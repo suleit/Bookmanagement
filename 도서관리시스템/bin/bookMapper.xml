@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="management.userDAO.BookMapper">
 		
 	<insert id="insertBook" parameterType="Book">
-	insert into book (title, book_id, publisher) values(#{title}, (select nvl(max(book_id),'0')+1 from book), #{publisher})	
+	insert into book (title, book_id, publisher) values(#{title}, (select nvl(max(to_number(book_id)),'0')+1 from book), #{publisher})	
 	</insert>
 	
 	<update id="updatehistoryOverdue">

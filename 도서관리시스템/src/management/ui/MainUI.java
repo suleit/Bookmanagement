@@ -466,13 +466,11 @@ public class MainUI extends JFrame implements ActionListener {
 
 		if (e.getSource() == button || e.getSource() == P1_TXTF) {
 			String bookname = P1_TXTF.getText();
-			if (table_rental != null) {
-				P2_DELETEMAIN.remove(delete_table_sc);
-			}
+				P2_DELETEMAIN.removeAll();
 			delete_table = new JTable();
 			if (model_delete != null)
 				model_delete.setRowCount(0);
-			booksforDelete = bd.findBookForRent(bookname);
+			booksforDelete = bd.findBook(bookname);
 			if (booksforDelete != null) {
 				int rows = booksforDelete.size();
 				if (rows > 0) {
@@ -504,9 +502,8 @@ public class MainUI extends JFrame implements ActionListener {
 
 			} else {
 				int row = delete_return.getSelectedRow();
-				String bookRental_id = (String) delete_return.getValueAt(row, 0);
-				if (bd.updateReceiveDate(bookRental_id)) {
-
+				String book_id = (String) delete_return.getValueAt(row, 0);
+				if (bd.deleteBook(book_id)) {
 					JOptionPane.showMessageDialog(this, "삭제가 완료되었습니다.");
 				} else {
 					JOptionPane.showMessageDialog(this, "삭제실패", "에러", JOptionPane.ERROR_MESSAGE);
