@@ -128,6 +128,7 @@ public class MainUI extends JFrame implements ActionListener {
 		NO2_Panel.add(P_NewBook, BorderLayout.NORTH);
 
 		NO2p_Label = new JLabel("\uC2E0\uADDC \uB3C4\uC11C \uB4F1\uB85D");
+		NO2p_Label.setFont(new Font("굴림", Font.BOLD, 18));
 		P_NewBook.add(NO2p_Label);
 		NO2p_Label.setHorizontalAlignment(SwingConstants.CENTER);
 		
@@ -136,7 +137,7 @@ public class MainUI extends JFrame implements ActionListener {
 		P_InputCenter.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 100));
 		JLabel introduction=new JLabel("<html>\uC9C1\uC811\uC785\uB825 : \uC9C1\uC811 \uC785\uB825\uC73C\uB85C \uC18C\uB7C9 \uB4F1\uB85D<br><br>\uC5D1\uC140\uD30C\uC77C \uC5C5\uB85C\uB4DC : \uB300\uB7C9\uC758 \uCC45\uC744 \uD55C\uBC88\uC5D0 \uB4F1\uB85D \uAC00\uB2A5<br><br>[\uC785\uB825 \uC608\uC2DC]<br>1\uD589 : \uCC45\uC774\uB984 | \uCD9C\uD310\uC0AC <br>2\uD589: JLPT\uB2E8\uC5B4\uC7A5|\uC2DC\uC0AC\uC77C\uBCF8\uC5B4\uC0AC<br><br>**\uC8FC\uC758\uC0AC\uD56D: \uB3D9\uC77C\uD55C \uCC45\uC774 \uC5EC\uB7EC\uAD8C\uC778 \uACBD\uC6B0\uB294 \uAC19\uC740 \uB0B4\uC6A9\uC758 \uD589\uC744 \uD574\uB2F9 \uAD8C\uC218\uB9CC\uD07C \uC0BD\uC785**<br></html>");
 		introduction.setBounds(new Rectangle(0, 0, 6, 0));
-		introduction.setFont(new Font("굴림", Font.BOLD, 18));
+		introduction.setFont(new Font("굴림", Font.BOLD, 16));
 		P_InputCenter.add(introduction);
 		
 		
@@ -154,6 +155,7 @@ public class MainUI extends JFrame implements ActionListener {
 		NO2_Panel2.add(DELETENAME, BorderLayout.NORTH);
 
 		DELETE_LABEL = new JLabel("\uB3C4\uC11C\uC0AD\uC81C");
+		DELETE_LABEL.setFont(new Font("굴림", Font.BOLD, 18));
 		DELETENAME.add(DELETE_LABEL);
 
 		DELETE_BOTTOM = new JPanel();
@@ -197,12 +199,86 @@ public class MainUI extends JFrame implements ActionListener {
 		NO3_Panel.setBorder(new MatteBorder(1, 1, 0, 1, (Color) new Color(0, 0, 0)));
 		JP_NO3.add(NO3_Panel, BorderLayout.NORTH);
 
-		NO3_Button1 = new JButton("\uC804\uCCB4 \uB3C4\uC11C \uCD9C\uB825");
-		NO3_Button1.addActionListener(this);
+		NO3_Button1 = new JButton("전체 도서 출력");
+		NO3_Button1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == NO3_Button1) {
+					if (p3_tables != null || panel_findbook != null) {
+						NO3_Panel2.removeAll();
+						NO3_Panel2.validate();
+					}
+					p3_tables = new JTable();
+					if (modelP3 != null)
+						modelP3.setRowCount(0);
+					booksforViewP3 = bd.findAllBook();
+
+					if (booksforViewP3 != null) {
+						int rows = booksforViewP3.size();
+						if (rows > 0) {
+							Object[][] objs = new Object[rows][3];
+							for (int i = 0; i < rows; i++) {
+								objs[i][0] = booksforViewP3.get(i).getBook_id();
+								objs[i][1] = booksforViewP3.get(i).getTitle();
+								objs[i][2] = booksforViewP3.get(i).getPublisher();
+							}
+							modelP3 = new DefaultTableModel(objs, new String[] { "book.NO", "도서제목", "출판사" });
+							p3_tables.setModel(modelP3);
+						}
+						p3_sc = new JScrollPane(p3_tables);
+						NO3_Panel2.add(p3_sc);
+					}
+				} // 버튼 1=전체도서정보 출력 완료
+			}
+		});
 		NO3_Panel.add(NO3_Button1);
 
 		NO3_Button2 = new JButton("\uB300\uC5EC\uC911\uC778 \uB3C4\uC11C\uBAA9\uB85D");
-		NO3_Button2.addActionListener(this);
+		NO3_Button2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == NO3_Button2) {
+
+					if (p3_tables != null || panel_findbook != null) {
+						NO3_Panel2.removeAll();
+						NO3_Panel2.validate();
+					}
+					p3_tables = new JTable();
+					if (modelP3 != null)
+						modelP3.setRowCount(0);
+					booksforViewP3 = bd.findRentalBook();
+
+					if (booksforViewP3 != null) {
+						int rows = booksforViewP3.size();
+						if (rows > 0) {
+							Object[][] objs = new Object[rows][8];
+							for (int i = 0; i < rows; i++) {
+								objs[i][0] = booksforViewP3.get(i).getBookrental_id();
+								objs[i][1] = booksforViewP3.get(i).getBook_id();
+								objs[i][2] = booksforViewP3.get(i).getTitle();
+								objs[i][3] = booksforViewP3.get(i).getPublisher();
+								objs[i][4] = booksforViewP3.get(i).getRental_name();
+								objs[i][5] = booksforViewP3.get(i).getRental_date();
+								objs[i][6] = booksforViewP3.get(i).getReserve_name();
+								objs[i][7] = booksforViewP3.get(i).getOverdue();
+							}
+
+							modelP3 = new DefaultTableModel(objs,
+									new String[] { "대여번호", "book.NO", "도서제목", "출판사", "대여자명", "대여일시", "예약자명", "연체일자" });
+							p3_tables.setModel(modelP3);
+							p3_tables.updateUI();
+						}
+						p3_sc = new JScrollPane(p3_tables);
+						p3_sc.setVisible(true);
+					}
+				} // 버튼2= 대여중인 도서정보 출력 코드
+				NO3_Panel2.add(p3_sc);
+				NO3_Panel2.setVisible(true);
+		
+			}
+		});
 		NO3_Panel.add(NO3_Button2);
 
 		NO3_Button3 = new JButton("\uC5F0\uCCB4\uC911\uC778 \uB3C4\uC11C\uBAA9\uB85D");
@@ -459,19 +535,22 @@ public class MainUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, "예약할 책이 선택되지 않았습니다.");
 			} else {
 				int row = table_rental.getSelectedRow();
+				
+				
 				InputRentalUser inputUser = null;
 				String rental_date = (String) table_rental.getValueAt(row, 4);
 				String reserve_name= (String) table_rental.getValueAt(row,5);	
-				System.out.println(rental_date);
+				System.out.println("대여일"+rental_date);
+				System.out.println("예약자명"+reserve_name);
 
-				if (rental_date == null||reserve_name!=null) { // 대여가 없으면 예약이 아니라 대여를 해야함..
-					JOptionPane.showMessageDialog(this, "대여가 가능하거나 예약자가 이미 있어 예약이 불가능합니다");
-				} else {
+				if (rental_date != null&&reserve_name==null) { // 대여가 없으면 예약이 아니라 대여를 해야함..
 					if (inputUser != null)
 						inputUser.dispose();
 					String bookname = (String) table_rental.getValueAt(row, 1);
 					String bookrental_id = (String) table_rental.getValueAt(row, 7);
 					inputUser = new InputRentalUser(bookname, bookrental_id, 0);
+				} else {
+					JOptionPane.showMessageDialog(this, "대여가 가능하거나 예약자가 이미 있어 예약이 불가능합니다");
 				}
 
 			}
@@ -505,14 +584,14 @@ public class MainUI extends JFrame implements ActionListener {
 					model_delete = new DefaultTableModel(objs,
 							new String[] { "book.NO", "도서제목", "출판사", "대여자명", "예약자명", "연체일자" });
 					delete_table.setModel(model_delete);
-					delete_table.updateUI();
-					model_delete.fireTableDataChanged();
+					setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(this, "찾으시는 책이 존재하지 않습니다.");
 				}
 				delete_table_sc = new JScrollPane(delete_table);
 
 				P2_DELETEMAIN.add(delete_table_sc);
+				
 				delete_table_sc.updateUI();
 			} else {
 				JOptionPane.showMessageDialog(this, "찾으시는 책이 존재하지 않습니다.");
@@ -535,7 +614,7 @@ public class MainUI extends JFrame implements ActionListener {
 			}
 		} // 삭제
 
-		if (e.getSource() == P1_RENTAL_BUTTON || e.getSource() == P1_RETAL_TXTF) {
+		if (e.getSource() == P1_RENTAL_BUTTON) {
 			String bookname = P1_RETAL_TXTF.getText();
 			P2_RENTALMAIN.removeAll();
 			;
@@ -556,6 +635,9 @@ public class MainUI extends JFrame implements ActionListener {
 						objs[i][5] = booksforRental.get(i).getReserve_name();
 						objs[i][6] = booksforRental.get(i).getOverdue();
 						objs[i][7] = booksforRental.get(i).getBookrental_id();
+					}
+					for (int i = 0; i < 8; i++) {
+						System.out.println(i+""+objs[2][i]);
 					}
 
 					model = new DefaultTableModel(objs,
@@ -622,71 +704,12 @@ public class MainUI extends JFrame implements ActionListener {
 				}
 
 			}
-		} // 반납버튼 이벤트 종료
-
-		if (e.getSource() == NO3_Button1) {
-			if (p3_tables != null || panel_findbook != null) {
-				NO3_Panel2.removeAll();
-			}
-			p3_tables = new JTable();
-			if (modelP3 != null)
-				modelP3.setRowCount(0);
-			booksforViewP3 = bd.findAllBook();
-
-			if (booksforViewP3 != null) {
-				int rows = booksforViewP3.size();
-				if (rows > 0) {
-					Object[][] objs = new Object[rows][3];
-					for (int i = 0; i < rows; i++) {
-						objs[i][0] = booksforViewP3.get(i).getBook_id();
-						objs[i][1] = booksforViewP3.get(i).getTitle();
-						objs[i][2] = booksforViewP3.get(i).getPublisher();
-					}
-					modelP3 = new DefaultTableModel(objs, new String[] { "book.NO", "도서제목", "출판사" });
-					p3_tables.setModel(modelP3);
-				}
-				p3_sc = new JScrollPane(p3_tables);
-				NO3_Panel2.add(p3_sc);
-			}
-		} // 버튼 1=전체도서정보 출력 완료
-		if (e.getSource() == NO3_Button2) {
-			if (p3_tables != null || panel_findbook != null) {
-				NO3_Panel2.removeAll();
-				;
-			}
-			p3_tables = new JTable();
-			if (modelP3 != null)
-				modelP3.setRowCount(0);
-			booksforViewP3 = bd.findRentalBook();
-
-			if (booksforViewP3 != null) {
-				int rows = booksforViewP3.size();
-				if (rows > 0) {
-					Object[][] objs = new Object[rows][8];
-					for (int i = 0; i < rows; i++) {
-						objs[i][0] = booksforViewP3.get(i).getBookrental_id();
-						objs[i][1] = booksforViewP3.get(i).getBook_id();
-						objs[i][2] = booksforViewP3.get(i).getTitle();
-						objs[i][3] = booksforViewP3.get(i).getPublisher();
-						objs[i][4] = booksforViewP3.get(i).getRental_name();
-						objs[i][5] = booksforViewP3.get(i).getRental_date();
-						objs[i][6] = booksforViewP3.get(i).getReserve_name();
-						objs[i][7] = booksforViewP3.get(i).getOverdue();
-					}
-
-					modelP3 = new DefaultTableModel(objs,
-							new String[] { "대여번호", "book.NO", "도서제목", "출판사", "대여자명", "대여일시", "예약자명", "연체일자" });
-					p3_tables.setModel(modelP3);
-				}
-				p3_sc = new JScrollPane(p3_tables);
-				NO3_Panel2.add(p3_sc);
-			}
-		} // 버튼2= 대여중인 도서정보 출력 코드
+		} // 반납버튼 이벤트 종료		
+	
 
 		if (e.getSource() == NO3_Button3) {
-			if (p3_tables != null || panel_findbook != null) {
 				NO3_Panel2.removeAll();
-			}
+				NO3_Panel2.validate();
 			p3_tables = new JTable();
 			if (modelP3 != null)
 				modelP3.setRowCount(0);
@@ -721,7 +744,8 @@ public class MainUI extends JFrame implements ActionListener {
 
 		if (e.getSource() == NO3_Button4) {
 			NO3_Panel2.removeAll();
-
+			NO3_Panel2.validate();
+			
 			if (panel_findbook == null) {
 				panel_findbook = new JPanel();
 				panel_findbook.add(new JLabel("도서제목"));
@@ -734,6 +758,7 @@ public class MainUI extends JFrame implements ActionListener {
 				NO3_Panel2.add(panel_findbook, BorderLayout.NORTH);
 			} else {
 				NO3_Panel2.add(panel_findbook, BorderLayout.NORTH);
+				NO3_Panel2.setVisible(true);
 			}
 		} // 버튼 4 검색창 띄우기
 

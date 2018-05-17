@@ -63,8 +63,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="findBookForRent" parameterType="String" resultType="Book">
-	select r.rental_id as bookrental_id, b.book_id, b.title, b.publisher, nvl(f.name,' ' )as rental_name, 
-	nvl(s.name, ' ') as reserve_name, r.rental_date, r.overdue_date
+	select r.rental_id as bookrental_id, b.book_id, b.title, b.publisher, f.name as rental_name, 
+	s.name as reserve_name, r.rental_date, r.overdue_date
  	from book b full outer join bookrental r on b.book_id=r.book_id 
  	left outer join bookuser f on r.rentalUser_id=f.user_id
  	left outer join bookuser s on r.reserve_id=s.user_id
@@ -73,8 +73,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="findBookForReturn" parameterType="String" resultType="Book">
- 	select r.rental_id as bookrental_id, b.book_id, b.title, b.publisher, nvl(f.name,' ' )as rental_name, 
- 	nvl(s.name, ' ') as reserve_name, r.rental_date, r.overdue_date
+ 	select r.rental_id as bookrental_id, b.book_id, b.title, b.publisher, f.name as rental_name, 
+ 	s.name as reserve_name, r.rental_date, r.overdue_date
  	from book b join bookrental r on b.book_id=r.book_id 
  	left outer join bookuser f on r.rentalUser_id=f.user_id
  	left outer join bookuser s on r.reserve_id=s.user_id

@@ -111,7 +111,13 @@ public class InputUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String bookName=P1_TXTF.getText();
 		String publisher=P2_TXTF.getText();
-		int num=Integer.parseInt(P3_TXTF.getText());
+		int num=0;
+		try {
+			num=Integer.parseInt(P3_TXTF.getText());
+			
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(this, "수량에는 숫자만 입력해주세요", "에러", JOptionPane.ERROR_MESSAGE);
+		}
 		boolean result=false;
 		for (int i = 0; i < num; i++) {
 			Book b= new Book();
