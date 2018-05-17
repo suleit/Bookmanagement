@@ -384,7 +384,6 @@ public class MainUI extends JFrame implements ActionListener {
 	private BookDao bd = new BookDao();
 	private DefaultTableModel model, model2, modelP3, model_delete;
 	private JTable table_rental, table_return, p3_tables;
-
 	private JPanel panel_findbook;
 	private JTextField findbook_tf, P1_TXTF;
 	private JButton button_delete, b_findbook;
