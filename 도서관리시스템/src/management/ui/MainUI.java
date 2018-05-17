@@ -11,9 +11,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -28,6 +32,9 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
 
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
 import management.userDAO.BookDao;
 import management.userDAO.BookMapper;
 import management.vo.Book;
@@ -46,6 +53,7 @@ public class MainUI extends JFrame implements ActionListener {
 		getContentPane().add(P_NAME, BorderLayout.NORTH);
 
 		P_SCIT = new JLabel("SCIT \uB3C4\uC11C\uAD00\uB9AC\uD504\uB85C\uADF8\uB7A8");
+		P_SCIT.setFont(new Font("굴림", Font.PLAIN, 20));
 		P_NAME.add(P_SCIT);
 
 		P_Bottom = new JPanel();
@@ -71,6 +79,7 @@ public class MainUI extends JFrame implements ActionListener {
 		NO1_Panel.add(INTRO_NAME, BorderLayout.NORTH);
 
 		INTRO_LABEL = new JLabel("<html>SC IT 도서관리시스템을 이용해주셔서 감사합니다!<br>대여기간은 7일입니다.<br></html>");
+		INTRO_LABEL.setFont(new Font("굴림", Font.PLAIN, 20));
 		INTRO_LABEL.setHorizontalAlignment(SwingConstants.CENTER);
 		INTRO_NAME.add(INTRO_LABEL);
 
@@ -84,7 +93,7 @@ public class MainUI extends JFrame implements ActionListener {
 		P_MANAGEMENT.setLayout(null);
 		
 		textPane = new JTextPane();
-		textPane.setFont(new Font("굴림", Font.BOLD, 28));
+		textPane.setFont(new Font("굴림", Font.BOLD, 26));
 		textPane.setBounds(123, 210, 248, 262);
 		textPane.setText("     \uB3C4\uC11C\uAD00\uB9AC\r\n\r\n1. \uC2E0\uADDC\uB3C4\uC11C \uB4F1\uB85D\r\n2. \uD3D0\uAE30\uB3C4\uC11C \uC0AD\uC81C");
 		P_MANAGEMENT.add(textPane);
@@ -95,7 +104,7 @@ public class MainUI extends JFrame implements ActionListener {
 		P_PRINT.setLayout(null);
 
 		PRINT_TXT = new JTextPane();
-		PRINT_TXT.setFont(new Font("굴림", Font.BOLD, 28));
+		PRINT_TXT.setFont(new Font("굴림", Font.BOLD, 26));
 		PRINT_TXT.setBounds(88, 210, 320, 262);
 		PRINT_TXT.setText(
 				"      \uB3C4\uC11C\uBAA9\uB85D \uCD9C\uB825\r\n\r\n   1. \uB3C4\uC11C\uC815\uBCF4 \uCD9C\uB825\r\n2. \uB300\uCD9C\uC911\uC778 \uB3C4\uC11C \uC815\uBCF4\r\n 3. \uC5F0\uC81C\uC911\uC778 \uB3C4\uC11C\uC815\uBCF4");
@@ -107,7 +116,7 @@ public class MainUI extends JFrame implements ActionListener {
 		P_RENTAL.setLayout(null);
 
 		RENTAL_TXT = new JTextPane();
-		RENTAL_TXT.setFont(new Font("굴림", Font.BOLD, 28));
+		RENTAL_TXT.setFont(new Font("굴림", Font.BOLD, 26));
 		RENTAL_TXT.setBounds(192, 220, 131, 262);
 		RENTAL_TXT.setText("\uB300\uCD9C\uAD00\uB9AC\r\n\r\n 1. \uB300\uC5EC\r\n 2. \uBC18\uB0A9");
 		P_RENTAL.add(RENTAL_TXT);
@@ -130,6 +139,7 @@ public class MainUI extends JFrame implements ActionListener {
 		P_InputButton.add(B_INPUT);
 		
 		b_upload = new JButton("\uC5D1\uC140\uD30C\uC77C \uC5C5\uB85C\uB4DC");
+		b_upload.addActionListener(this);		
 		P_InputButton.add(b_upload);
 
 		P_NewBook = new JPanel();
@@ -297,6 +307,9 @@ public class MainUI extends JFrame implements ActionListener {
 		NO3_Panel2 = new JPanel();
 		JP_NO3.add(NO3_Panel2, BorderLayout.CENTER);
 		NO3_Panel2.setLayout(new BorderLayout(0, 0));
+		
+		NO3_Panel3 = new JPanel();
+		JP_NO3.add(NO3_Panel3, BorderLayout.CENTER);
 
 		JP_NO4 = new JPanel();
 		TABP.addTab("\uB300\uCD9C\uAD00\uB9AC", null, JP_NO4, null);
@@ -313,6 +326,7 @@ public class MainUI extends JFrame implements ActionListener {
 		P4_RENTAL.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		RENTAL_LABEL = new JLabel("\uB300\uC5EC");
+		RENTAL_LABEL.setFont(new Font("굴림", Font.BOLD, 18));
 		P4_RENTAL.add(RENTAL_LABEL);
 
 		RENTAL_BOTTOM = new JPanel();
@@ -336,6 +350,7 @@ public class MainUI extends JFrame implements ActionListener {
 		P1_RENTALMAIN.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		P1_RENTALNAME_LABEL = new JLabel("\uB3C4\uC11C\uC81C\uBAA9");
+		P1_RENTALNAME_LABEL.setFont(new Font("굴림", Font.PLAIN, 18));
 		P1_RENTALNAME_LABEL.setHorizontalAlignment(SwingConstants.CENTER);
 		P1_RENTALMAIN.add(P1_RENTALNAME_LABEL);
 
@@ -363,6 +378,7 @@ public class MainUI extends JFrame implements ActionListener {
 		RETURN_NAME.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		RESERVE_LABEL = new JLabel("\uBC18\uB0A9");
+		RESERVE_LABEL.setFont(new Font("굴림", Font.BOLD, 18));
 		RETURN_NAME.add(RESERVE_LABEL);
 
 		RETURN_BOTTOM = new JPanel();
@@ -382,6 +398,7 @@ public class MainUI extends JFrame implements ActionListener {
 		P1_RETURN.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		P1_RETURN_LABEL = new JLabel("\uB300\uC5EC\uC790\uBA85");
+		P1_RETURN_LABEL.setFont(new Font("굴림", Font.PLAIN, 18));
 		P1_RETURN_LABEL.setHorizontalAlignment(SwingConstants.CENTER);
 		P1_RETURN.add(P1_RETURN_LABEL);
 
@@ -486,6 +503,7 @@ public class MainUI extends JFrame implements ActionListener {
 	private JPanel P_InputCenter;
 	private JButton b_upload;
 	private JTextPane textPane;
+	private JPanel NO3_Panel3;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -800,7 +818,51 @@ public class MainUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, "해당 도서가 존재하지 않습니다."); 
 			}
 
-		}// 4번째 버튼 누른 후 책 검색버튼 이벤트
+		}// 4번째 버튼 누른 후 책 검색버튼 이벤트	
+		
+		if(e.getSource()==b_upload) {
+	    	ArrayList<Book> bookList = new ArrayList<>();
+		
+			JFileChooser file_upload= new JFileChooser();
+			file_upload.showOpenDialog(this);
+			File file=file_upload.getSelectedFile();
+	        try {
+	            // 엑셀파일 워크북 객체 생성
+	            Workbook workbook = Workbook.getWorkbook(file);
+	             
+	            // 시트 지정
+	            Sheet sheet = workbook.getSheet(0);
+	            
+	            // 행 길이
+	            int endIdx = sheet.getColumn(1).length-1;
+	            System.out.println(endIdx);
+	             
+	            for(int i=1; i <= endIdx; i++) {
+	        		Book book = new Book();
+	        		book.setTitle(sheet.getCell(0, i).getContents());
+	        		book.setPublisher(sheet.getCell(1, i).getContents());
+	              	bookList.add(book);
+	            }
+	            boolean result=false;
+	            int count_insertNum=0;
+	            for(Book b : bookList){
+	            	 result=bd.insertBook(b);
+	            	if(result==false) {
+	            		break;
+	            	}
+	            	count_insertNum++;
+	            }
+	            if(result) { //
+	            	JOptionPane.showMessageDialog(this, "신규도서목록"+endIdx+"개 삽입성공");
+	            }else {
+	            	JOptionPane.showMessageDialog(this, endIdx+" 개 행 중에 "+count_insertNum+"개만 삽입되었습니다. 나머지 행은 삽입 실패!");
+	            }
+	            
+	        } catch (Exception e2) {
+	        	e2.printStackTrace();
+	        }
 
+		}
+		
 	}
 }
