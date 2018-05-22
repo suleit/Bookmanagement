@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 
 import management.userDAO.BookDao;
 import management.vo.*;
@@ -28,6 +29,13 @@ public class Login extends JFrame implements ActionListener {
 
 	public Login() {
 		super("SCIT 도서관리프로그램");
+		
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -71,10 +79,6 @@ public class Login extends JFrame implements ActionListener {
 
 	}
 
-	public static void main(String[] args) {
-		Login login = new Login();
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton source = (JButton) e.getSource();
@@ -85,6 +89,11 @@ public class Login extends JFrame implements ActionListener {
 			User user1=bd.findUser(id);	
 			if(pw.equals(user1.getUser_pw())) {
 				this.dispose();				
+				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				} catch (Throwable e1) {
+					e1.printStackTrace();
+				}
 				new MainUI();				
 			}else {
 				new JOptionPane().showMessageDialog(null,"로그인 정보가 불일치합니다.","로그인 실패", JOptionPane.WARNING_MESSAGE);

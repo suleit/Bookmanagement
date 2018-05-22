@@ -28,6 +28,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
@@ -44,7 +45,14 @@ import javax.swing.JTextArea;
 
 public class MainUI extends JFrame implements ActionListener {
 	public MainUI() {
-
+		
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setFont(new Font("Tahoma", Font.BOLD, 12));
 		setSize(new Dimension(1500, 900));
 		setTitle("SCIT \uB3C4\uC11C\uAD00\uB9AC\uD504\uB85C\uADF8\uB7A8");
@@ -91,12 +99,13 @@ public class MainUI extends JFrame implements ActionListener {
 		P_MANAGEMENT.setBorder(new LineBorder(new Color(0, 0, 0)));
 		NO1_MAIN.add(P_MANAGEMENT);
 		P_MANAGEMENT.setLayout(null);
-		
+
 		textPane = new JTextPane();
 		textPane.setFont(new Font("굴림", Font.BOLD, 26));
 		textPane.setEditable(false);
 		textPane.setBounds(123, 210, 248, 262);
-		textPane.setText("     \uB3C4\uC11C\uAD00\uB9AC\r\n\r\n1. \uC2E0\uADDC\uB3C4\uC11C \uB4F1\uB85D\r\n2. \uD3D0\uAE30\uB3C4\uC11C \uC0AD\uC81C");
+		textPane.setText(
+				"     \uB3C4\uC11C\uAD00\uB9AC\r\n\r\n1. \uC2E0\uADDC\uB3C4\uC11C \uB4F1\uB85D\r\n2. \uD3D0\uAE30\uB3C4\uC11C \uC0AD\uC81C");
 		P_MANAGEMENT.add(textPane);
 
 		P_PRINT = new JPanel();
@@ -140,9 +149,9 @@ public class MainUI extends JFrame implements ActionListener {
 		B_INPUT = new JButton("\uC9C1\uC811 \uC785\uB825");
 		B_INPUT.addActionListener(this);
 		P_InputButton.add(B_INPUT);
-		
+
 		b_upload = new JButton("\uC5D1\uC140\uD30C\uC77C \uC5C5\uB85C\uB4DC");
-		b_upload.addActionListener(this);		
+		b_upload.addActionListener(this);
 		P_InputButton.add(b_upload);
 
 		P_NewBook = new JPanel();
@@ -153,17 +162,16 @@ public class MainUI extends JFrame implements ActionListener {
 		NO2p_Label.setFont(new Font("굴림", Font.BOLD, 18));
 		P_NewBook.add(NO2p_Label);
 		NO2p_Label.setHorizontalAlignment(SwingConstants.CENTER);
-		
+
 		P_InputCenter = new JPanel();
 		P_InputCenter.setAlignmentY(1.0f);
 		P_InputCenter.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 100));
-		JLabel introduction=new JLabel("<html>\uC9C1\uC811\uC785\uB825 : \uC9C1\uC811 \uC785\uB825\uC73C\uB85C \uC18C\uB7C9 \uB4F1\uB85D<br><br>\uC5D1\uC140\uD30C\uC77C \uC5C5\uB85C\uB4DC : \uB300\uB7C9\uC758 \uCC45\uC744 \uD55C\uBC88\uC5D0 \uB4F1\uB85D \uAC00\uB2A5<br><br>[\uC785\uB825 \uC608\uC2DC]<br>1\uD589 : \uCC45\uC774\uB984 | \uCD9C\uD310\uC0AC <br>2\uD589: JLPT\uB2E8\uC5B4\uC7A5|\uC2DC\uC0AC\uC77C\uBCF8\uC5B4\uC0AC<br><br>**\uC8FC\uC758\uC0AC\uD56D: \uB3D9\uC77C\uD55C \uCC45\uC774 \uC5EC\uB7EC\uAD8C\uC778 \uACBD\uC6B0\uB294 \uAC19\uC740 \uB0B4\uC6A9\uC758 \uD589\uC744 \uD574\uB2F9 \uAD8C\uC218\uB9CC\uD07C \uC0BD\uC785**<br><br>**xls\uC591\uC2DD\uC73C\uB85C\uB9CC \uC5C5\uB85C\uB4DC \uAC00\uB2A5**<br></html>");
+		JLabel introduction = new JLabel(
+				"<html>\uC9C1\uC811\uC785\uB825 : \uC9C1\uC811 \uC785\uB825\uC73C\uB85C \uC18C\uB7C9 \uB4F1\uB85D<br><br>\uC5D1\uC140\uD30C\uC77C \uC5C5\uB85C\uB4DC : \uB300\uB7C9\uC758 \uCC45\uC744 \uD55C\uBC88\uC5D0 \uB4F1\uB85D \uAC00\uB2A5<br><br>[\uC785\uB825 \uC608\uC2DC]<br>1\uD589 : \uCC45\uC774\uB984 | \uCD9C\uD310\uC0AC <br>2\uD589: JLPT\uB2E8\uC5B4\uC7A5|\uC2DC\uC0AC\uC77C\uBCF8\uC5B4\uC0AC<br><br>**\uC8FC\uC758\uC0AC\uD56D: \uB3D9\uC77C\uD55C \uCC45\uC774 \uC5EC\uB7EC\uAD8C\uC778 \uACBD\uC6B0\uB294 \uAC19\uC740 \uB0B4\uC6A9\uC758 \uD589\uC744 \uD574\uB2F9 \uAD8C\uC218\uB9CC\uD07C \uC0BD\uC785**<br><br>**xls\uC591\uC2DD\uC73C\uB85C\uB9CC \uC5C5\uB85C\uB4DC \uAC00\uB2A5**<br></html>");
 		introduction.setBounds(new Rectangle(0, 0, 6, 0));
 		introduction.setFont(new Font("굴림", Font.BOLD, 16));
 		P_InputCenter.add(introduction);
-		
-		
-		
+
 		NO2_Panel.add(P_InputCenter, BorderLayout.CENTER);
 
 		NO2_Panel2 = new JPanel();
@@ -223,12 +231,12 @@ public class MainUI extends JFrame implements ActionListener {
 
 		NO3_Button1 = new JButton("전체 도서 출력");
 		NO3_Button1.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == NO3_Button1) {
-						NO3_Panel2.removeAll();
-						NO3_Panel2.validate();
+					NO3_Panel2.removeAll();
+					NO3_Panel2.validate();
 					p3_tables = new JTable();
 					if (modelP3 != null)
 						modelP3.setRowCount(0);
@@ -248,6 +256,7 @@ public class MainUI extends JFrame implements ActionListener {
 						}
 						p3_sc = new JScrollPane(p3_tables);
 						NO3_Panel2.add(p3_sc);
+						NO3_Panel2.setVisible(true);
 					}
 				} // 버튼 1=전체도서정보 출력 완료
 			}
@@ -256,13 +265,13 @@ public class MainUI extends JFrame implements ActionListener {
 
 		NO3_Button2 = new JButton("\uB300\uC5EC\uC911\uC778 \uB3C4\uC11C\uBAA9\uB85D");
 		NO3_Button2.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == NO3_Button2) {
 
-						NO3_Panel2.removeAll();
-						NO3_Panel2.validate();
+					NO3_Panel2.removeAll();
+					NO3_Panel2.validate();
 					p3_tables = new JTable();
 					if (modelP3 != null)
 						modelP3.setRowCount(0);
@@ -294,7 +303,7 @@ public class MainUI extends JFrame implements ActionListener {
 				} // 버튼2= 대여중인 도서정보 출력 코드
 				NO3_Panel2.add(p3_sc);
 				NO3_Panel2.setVisible(true);
-		
+
 			}
 		});
 		NO3_Panel.add(NO3_Button2);
@@ -310,9 +319,6 @@ public class MainUI extends JFrame implements ActionListener {
 		NO3_Panel2 = new JPanel();
 		JP_NO3.add(NO3_Panel2, BorderLayout.CENTER);
 		NO3_Panel2.setLayout(new BorderLayout(0, 0));
-		
-		NO3_Panel3 = new JPanel();
-		JP_NO3.add(NO3_Panel3, BorderLayout.CENTER);
 
 		JP_NO4 = new JPanel();
 		TABP.addTab("\uB300\uCD9C\uAD00\uB9AC", null, JP_NO4, null);
@@ -424,10 +430,10 @@ public class MainUI extends JFrame implements ActionListener {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				System.out.println("창이 열렸습니다.");
-				boolean result = bd.updateOverdue();
-				boolean result2 = bd.updateHistoryOverdue();
-				System.out.println(result);
-				System.out.println(result2);
+				boolean result = bd.updateHistoryOverdue();
+				if(result) {
+					System.out.println("연체일 업데이트 수행여부 :"+result);
+				}
 			}
 		});
 	}
@@ -499,26 +505,13 @@ public class MainUI extends JFrame implements ActionListener {
 	private JPanel panel_findbook;
 	private JTextField findbook_tf, P1_TXTF;
 	private JButton button_delete, b_findbook;
-	private JTable delete_table;// 추가...
+	private JTable delete_table;
 	private List<Book> booksforRental, booksforReturn, booksforViewP3, booksforDelete;
 	private JScrollPane rental_table_sc, return_table_sc, p3_sc, delete_table_sc;
 	private JLabel P1_Label;
 	private JPanel P_InputCenter;
 	private JButton b_upload;
 	private JTextPane textPane;
-	private JPanel NO3_Panel3;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainUI frame = new MainUI();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("시스템 종료")) {
@@ -540,7 +533,6 @@ public class MainUI extends JFrame implements ActionListener {
 			} else {
 				int row = table_rental.getSelectedRow();
 				String rental_date = (String) table_rental.getValueAt(row, 4);
-				System.out.println(rental_date);
 
 				if (rental_date != null) { // 대여가 있으면 예약을 해야함
 					JOptionPane.showMessageDialog(this, "대여가 불가능한 책이므로 예약 버튼을 눌러주세요.");
@@ -561,15 +553,12 @@ public class MainUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, "예약할 책이 선택되지 않았습니다.");
 			} else {
 				int row = table_rental.getSelectedRow();
-				
-				
-				InputRentalUser inputUser = null;
-				String rental_date = (String) table_rental.getValueAt(row,4);
-				String reserve_name= (String) table_rental.getValueAt(row,5);	
-				System.out.println("대여일"+rental_date);
-				System.out.println("예약자명"+reserve_name);
 
-				if (rental_date != null&&reserve_name==null) { // 대여가 없으면 예약이 아니라 대여를 해야함..
+				InputRentalUser inputUser = null;
+				String rental_date = (String) table_rental.getValueAt(row, 4);
+				String reserve_name = (String) table_rental.getValueAt(row, 5);
+
+				if (rental_date != null && reserve_name == null) { // 대여가 없으면 예약이 아니라 대여를 해야함..
 					if (inputUser != null)
 						inputUser.dispose();
 					String bookname = (String) table_rental.getValueAt(row, 1);
@@ -578,7 +567,6 @@ public class MainUI extends JFrame implements ActionListener {
 				} else {
 					JOptionPane.showMessageDialog(this, "대여가 가능하거나 예약자가 이미 있어 예약이 불가능합니다");
 				}
-
 			}
 		}
 
@@ -589,13 +577,10 @@ public class MainUI extends JFrame implements ActionListener {
 			if (model_delete != null)
 				model_delete.setRowCount(0);
 			booksforDelete = bd.findBook(bookname);
-			System.out.println(booksforDelete);
-			
+
 			if (booksforDelete != null) {
 				int rows = booksforDelete.size();
-				
-				System.out.println(rows);
-				
+
 				if (rows > 0) {
 					Object[][] objs = new Object[rows][7];
 					for (int i = 0; i < booksforDelete.size(); i++) {
@@ -617,7 +602,7 @@ public class MainUI extends JFrame implements ActionListener {
 				delete_table_sc = new JScrollPane(delete_table);
 
 				P2_DELETEMAIN.add(delete_table_sc);
-				
+
 				delete_table_sc.updateUI();
 			} else {
 				JOptionPane.showMessageDialog(this, "찾으시는 책이 존재하지 않습니다.");
@@ -663,13 +648,12 @@ public class MainUI extends JFrame implements ActionListener {
 						objs[i][7] = booksforRental.get(i).getBookrental_id();
 					}
 					for (int i = 0; i < 8; i++) {
-						System.out.println(i+""+objs[2][i]);
 					}
 
 					model = new DefaultTableModel(objs,
 							new String[] { "book.NO", "도서제목", "출판사", "대여자명", "대여일시", "예약자명", "연체일자", "대여번호" });
 					table_rental.setModel(model);
-				}else {
+				} else {
 					JOptionPane.showMessageDialog(this, "찾으시는 도서가  존재하지 않거나 대여 및 예약이 꽉 차있습니다.");
 				}
 				rental_table_sc = new JScrollPane(table_rental);
@@ -722,7 +706,7 @@ public class MainUI extends JFrame implements ActionListener {
 			} else {
 				int row = table_return.getSelectedRow();
 				String bookRental_id = (String) table_return.getValueAt(row, 0);
-				if (bd.updateReceiveDate(bookRental_id) && bd.deleteBookRental(bookRental_id)) {
+				if (bd.updateReceiveDate(bookRental_id) && bd.removeRentalID(bookRental_id)) {
 					JOptionPane.showMessageDialog(this, "반납이 완료되었습니다.");
 				} else {
 					JOptionPane.showMessageDialog(this, "반납실패", "에러", JOptionPane.ERROR_MESSAGE);
@@ -730,18 +714,17 @@ public class MainUI extends JFrame implements ActionListener {
 				}
 
 			}
-		} // 반납버튼 이벤트 종료		
-	
+		} // 반납버튼 이벤트 종료
 
 		if (e.getSource() == NO3_Button3) {
-				NO3_Panel2.removeAll();
-				NO3_Panel2.validate();
+			NO3_Panel2.removeAll();
+			NO3_Panel2.validate();
 			p3_tables = new JTable();
 			if (modelP3 != null)
 				modelP3.setRowCount(0);
 			List<DBvo> overdueBooks = bd.findOverdueBook();
 
-			if (booksforViewP3 != null) {
+			if (overdueBooks != null) {
 				int rows = overdueBooks.size();
 				if (rows > 0) {
 					Object[][] objs = new Object[rows][8];
@@ -771,7 +754,7 @@ public class MainUI extends JFrame implements ActionListener {
 		if (e.getSource() == NO3_Button4) {
 			NO3_Panel2.removeAll();
 			NO3_Panel2.validate();
-			
+
 			if (panel_findbook == null) {
 				panel_findbook = new JPanel();
 				panel_findbook.add(new JLabel("도서제목"));
@@ -817,55 +800,56 @@ public class MainUI extends JFrame implements ActionListener {
 				}
 				p3_sc = new JScrollPane(p3_tables);
 				NO3_Panel2.add(p3_sc, BorderLayout.CENTER);
-			}else{
-				JOptionPane.showMessageDialog(this, "해당 도서가 존재하지 않습니다."); 
+			} else {
+				JOptionPane.showMessageDialog(this, "해당 도서가 존재하지 않습니다.");
 			}
 
-		}// 4번째 버튼 누른 후 책 검색버튼 이벤트	
-		
-		if(e.getSource()==b_upload) {
-	    	ArrayList<Book> bookList = new ArrayList<>();
-		
-			JFileChooser file_upload= new JFileChooser();
-			file_upload.showOpenDialog(this);
-			File file=file_upload.getSelectedFile();
-	        try {
-	            // 엑셀파일 워크북 객체 생성
-	            Workbook workbook = Workbook.getWorkbook(file);
-	             
-	            // 시트 지정
-	            Sheet sheet = workbook.getSheet(0);
-	            
-	            // 행 길이
-	            int endIdx = sheet.getColumn(1).length-1;
-	            System.out.println(endIdx);
-	             
-	            for(int i=1; i <= endIdx; i++) {
-	        		Book book = new Book();
-	        		book.setTitle(sheet.getCell(0, i).getContents());
-	        		book.setPublisher(sheet.getCell(1, i).getContents());
-	              	bookList.add(book);
-	            }
-	            boolean result=false;
-	            int count_insertNum=0;
-	            for(Book b : bookList){
-	            	 result=bd.insertBook(b);
-	            	if(result==false) {
-	            		break;
-	            	}
-	            	count_insertNum++;
-	            }
-	            if(result) { //
-	            	JOptionPane.showMessageDialog(this, "신규도서목록"+endIdx+"개 삽입성공");
-	            }else {
-	            	JOptionPane.showMessageDialog(this, endIdx+" 개 행 중에 "+count_insertNum+"개만 삽입되었습니다. 나머지 행은 삽입 실패!");
-	            }
-	            
-	        } catch (Exception e2) {
-	        	e2.printStackTrace();
-	        }
+		} // 4번째 버튼 누른 후 책 검색버튼 이벤트
 
+		if (e.getSource() == b_upload) {
+			ArrayList<Book> bookList = new ArrayList<>();
+
+			JFileChooser file_upload = new JFileChooser();
+			file_upload.showOpenDialog(this);
+			File file = file_upload.getSelectedFile();
+			if (file != null) {
+				try {
+					// 엑셀파일 워크북 객체 생성
+					Workbook workbook = Workbook.getWorkbook(file);
+
+					// 시트 지정
+					Sheet sheet = workbook.getSheet(0);
+
+					// 행 길이
+					int endIdx = sheet.getColumn(1).length - 1;
+
+					for (int i = 1; i <= endIdx; i++) {
+						Book book = new Book();
+						book.setTitle(sheet.getCell(0, i).getContents());
+						book.setPublisher(sheet.getCell(1, i).getContents());
+						bookList.add(book);
+					}
+					boolean result = false;
+					int count_insertNum = 0;
+					for (Book b : bookList) {
+						result = bd.insertBook(b);
+						if (result == false) {
+							break;
+						}
+						count_insertNum++;
+					}
+					if (result) { //
+						JOptionPane.showMessageDialog(this, "신규도서목록" + endIdx + "개 삽입성공");
+					} else {
+						JOptionPane.showMessageDialog(this,
+								endIdx + " 개 행 중에 " + count_insertNum + "개만 삽입되었습니다. 나머지 행은 삽입 실패!");
+					}
+
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}// 캐치문 종료 
+			}// if 문 종료 
 		}
-		
+
 	}
 }

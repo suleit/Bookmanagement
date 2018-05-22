@@ -15,6 +15,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 import management.userDAO.BookDao;
 import management.vo.Book;
@@ -42,6 +43,13 @@ public class InputUI extends JFrame implements ActionListener {
 
 	
 	public InputUI() {
+		
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		setTitle("\uB4F1\uB85D");
 		getContentPane().setLayout(new GridLayout(4, 0, 0, 0));
 		setFont(new Font("Tahoma", Font.BOLD, 12));

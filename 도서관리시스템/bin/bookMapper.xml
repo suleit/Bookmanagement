@@ -11,13 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updatehistoryOverdue">
 	update bookrentalhistory set overdue_date=round(sysdate-(rental_date+7))
 	where receive_date is null and sysdate>(rental_date+7)
-	</update>
-	
-	<update id="updateOverdue">
-	update bookrental set overdue_date=round(sysdate-(rental_date+7))
-	where sysdate>(rental_date+7)
-	</update>
-		
+	</update>		
 	
 	<select id="findUser" parameterType="String" resultType="User">
 	select user_id, user_pw, name, gisu, class as classname, user_pw from BookUser where user_id=#{user_id}
@@ -26,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findbook" parameterType="String" resultType="Book">
 	select b.book_id, b.title, b.publisher, nvl(f.name,' ' )as rental_name, nvl(s.name, ' ') as reserve_name, 
 	r.rental_date, r.overdue_date as overdue
- 	from book b left outer join bookrental r on b.book_id=r.book_id 
+ 	from book b left outer join bookrentalhistory r on b.rental_id= r.rental_id
  	left outer join bookuser f on r.rentalUser_id=f.user_id
  	left outer join bookuser s on r.reserve_id=s.user_id
 	where lower(b.title) like lower('%'|| #{title} || '%') 
@@ -43,20 +37,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="findRentalBook" resultType="Book">
-	select r.rental_id as bookrental_id, b.book_id, b.title, b.publisher, nvl(f.name,' ' )as rental_name, nvl(s.name, ' ') as reserve_name, 
+	select r.rental_id as bookrental_id, b.book_id, b.title, b.publisher, 
+	nvl(f.name,' ' )as rental_name, nvl(s.name, ' ') as reserve_name, 
 	r.rental_date, r.overdue_date as overdue
- 	from book b join bookrental r on b.book_id=r.book_id 
- 	left outer join bookuser f on r.rentalUser_id=f.user_id
- 	left outer join bookuser s on r.reserve_id=s.user_id
- 	order by to_number(b.book_id)
+	from book b join bookrentalhistory r on b.rental_id= r.rental_id
+	left outer join bookuser f on r.rentalUser_id=f.user_id
+	left outer join bookuser s on r.reserve_id=s.user_id
+	order by to_number(b.book_id)
 	</select>
 	
 	<select id="findOverdueBook" resultType="DBvo">
 	select r.rental_id as bookrental_id, b.book_id, b.title, b.publisher, 
 	f.name as "rental_name",r.rentalUser_id as rental_id, f.gisu, 
 	f.class as classname, r.rental_date, r.overdue_date as overdue
-	from book b join bookrental r on b.book_id=r.book_id 
-	left outer join bookuser f on r.rentalUser_id=f.user_id 
+	from book b join bookrentalhistory r on b.rental_id= r.rental_id
+	left outer join bookuser f on r.rentalUser_id=f.user_id
 	left outer join bookuser s on r.reserve_id=s.user_id
 	where r.overdue_date>0
 	order by to_number(r.rental_id)
@@ -65,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findBookForRent" parameterType="String" resultType="Book">
 	select r.rental_id as bookrental_id, b.book_id, b.title, b.publisher, f.name as rental_name, 
 	s.name as reserve_name, r.rental_date, r.overdue_date
- 	from book b full outer join bookrental r on b.book_id=r.book_id 
+ 	from book b left outer join bookrentalhistory r on b.rental_id= r.rental_id
  	left outer join bookuser f on r.rentalUser_id=f.user_id
  	left outer join bookuser s on r.reserve_id=s.user_id
  	where lower(b.title) like lower('%'|| #{title} || '%') 
@@ -75,7 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findBookForReturn" parameterType="String" resultType="Book">
  	select r.rental_id as bookrental_id, b.book_id, b.title, b.publisher, f.name as rental_name, 
  	s.name as reserve_name, r.rental_date, r.overdue_date
- 	from book b join bookrental r on b.book_id=r.book_id 
+ 	from book b join bookrentalhistory r on b.rental_id= r.rental_id
  	left outer join bookuser f on r.rentalUser_id=f.user_id
  	left outer join bookuser s on r.reserve_id=s.user_id
 	where f.name= #{rental_name}
@@ -86,23 +81,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	insert into bookrentalhistory (rental_id, book_id, rental_date, rentaluser_id) 
 	values((select nvl(max(rental_id),'0')+1 from bookrentalhistory),#{book_id},sysdate,#{user_id})
 	</insert>
+	<!-- 오늘날짜로 렌트한 책 중에서만 검색 과거 대여는 검색하지 않음 -->
+	<update id="updateBook" parameterType="String">
+	update book set rental_id=
+	(select rental_id from bookrentalhistory where book_id=#{book_id} and rental_date>=trunc(sysdate))
+	where book_id = #{book_id}
+	</update>
 	
-	<insert id="rentalBook" parameterType="map">
-	insert into bookrental (rental_id, book_id, rental_date, rentaluser_id) 
-	values((select nvl(max(rental_id),'0')+1 from bookrentalhistory),#{book_id},sysdate,#{user_id})
-	</insert>
+	<update id="removeRentalID" parameterType="String">
+	update book set rental_id=null where book_id = #{book_id}
+	</update>
 	
 	<update id="updateReceiveDate" parameterType="String">
 	update bookrentalhistory set receive_date=sysdate where rental_id=#{bookrental_id}
-	</update>
-	
-	<delete id="deleteBookRental" parameterType="String">
-	delete from bookrental where rental_id=#{bookrental_id}
-	</delete>
-	
-	
-	<update id="updateReserve" parameterType="map">
-	update bookrental set reserve_id = #{user_id} where rental_id = #{bookrental_id}
 	</update>
 	
 	<update id="updateReserveHistory" parameterType="map">
