@@ -310,9 +310,6 @@ public class MainUI extends JFrame implements ActionListener {
 		NO3_Panel2 = new JPanel();
 		JP_NO3.add(NO3_Panel2, BorderLayout.CENTER);
 		NO3_Panel2.setLayout(new BorderLayout(0, 0));
-		
-		NO3_Panel3 = new JPanel();
-		JP_NO3.add(NO3_Panel3, BorderLayout.CENTER);
 
 		JP_NO4 = new JPanel();
 		TABP.addTab("\uB300\uCD9C\uAD00\uB9AC", null, JP_NO4, null);
@@ -506,7 +503,6 @@ public class MainUI extends JFrame implements ActionListener {
 	private JPanel P_InputCenter;
 	private JButton b_upload;
 	private JTextPane textPane;
-	private JPanel NO3_Panel3;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

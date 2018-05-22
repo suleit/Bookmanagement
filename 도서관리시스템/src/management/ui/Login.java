@@ -28,7 +28,7 @@ public class Login extends JFrame implements ActionListener {
 
 	public Login() {
 		super("SCIT 도서관리프로그램");
-		setResizable(false);
+		setSize(new Dimension(569, 417));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		lbl_title = new JLabel("SCIT 도서관리프로그램", JLabel.CENTER);
@@ -46,7 +46,7 @@ public class Login extends JFrame implements ActionListener {
 		btn_cancel = new JButton("Cancel");
 		btn_cancel.addActionListener(this);
 
-		add(lbl_title, BorderLayout.NORTH);
+		getContentPane().add(lbl_title, BorderLayout.NORTH);
 
 		JPanel p_center_1 = new JPanel();
 		p_center_1.add(lbl_id);
@@ -59,12 +59,12 @@ public class Login extends JFrame implements ActionListener {
 		JPanel p_center = new JPanel(new GridLayout(2, 1));
 		p_center.add(p_center_1);
 		p_center.add(p_center_2);
-		add(p_center, BorderLayout.CENTER);
+		getContentPane().add(p_center, BorderLayout.CENTER);
 
 		JPanel p_south = new JPanel();
 		p_south.add(btn_ok);
 		p_south.add(btn_cancel);
-		add(p_south, BorderLayout.SOUTH);
+		getContentPane().add(p_south, BorderLayout.SOUTH);
 
 		pack();
 		setVisible(true);
