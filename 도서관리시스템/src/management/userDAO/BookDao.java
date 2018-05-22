@@ -35,28 +35,6 @@ public class BookDao {
 		return result;		
 	}
 	
-	public boolean updateOverdue() {
-		SqlSession session=null;
-		boolean result=false;
-		int cnt=0;
-		
-		try {
-			session= factory.openSession();
-			BookMapper mapper= session.getMapper(BookMapper.class);
-			cnt= mapper.updateOverdue();
-			if(cnt>0) {
-				result=true;
-			}
-			session.commit();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			if(session!=null)session.close();
-		}
-		return result;		
-	}
-	
 	public boolean deleteBook(String book_id) {
 		SqlSession session=null;
 		boolean result=false;
@@ -101,49 +79,6 @@ public class BookDao {
 		return result;	
 	}
 	
-	public boolean rentalBook(String book_id, String user_id) {
-		SqlSession session=null;
-		boolean result=false;
-		int cnt=0;
-		
-		try {
-			session= factory.openSession();
-			BookMapper mapper= session.getMapper(BookMapper.class);
-			cnt= mapper.rentalBook(book_id, user_id);
-			if(cnt>0) {
-				result=true;
-			}
-			session.commit();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			if(session!=null)session.close();
-		}
-		return result;	
-	}
-	public boolean deleteBookRental(String bookrental_id) {
-		SqlSession session=null;
-		boolean result=false;
-		int cnt=0;
-		
-		try {
-			session= factory.openSession();
-			BookMapper mapper= session.getMapper(BookMapper.class);
-			cnt= mapper.deleteBookRental(bookrental_id);
-			if(cnt>0) {
-				result=true;
-			}
-			session.commit();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			if(session!=null)session.close();
-		}
-		return result;	
-	}
-	
 	
 	public boolean updateReceiveDate(String bookrental_id) {
 		SqlSession session=null;
@@ -175,29 +110,6 @@ public class BookDao {
 			session= factory.openSession();
 			BookMapper mapper= session.getMapper(BookMapper.class);
 			cnt= mapper.updateReserveHistory(bookrental_id, user_id);
-			if(cnt>0) {
-				result=true;
-			}
-			session.commit();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			if(session!=null)session.close();
-		}
-		return result;
-	}
-	
-	
-	public boolean updateReserve(String bookrental_id, String user_id) {
-		SqlSession session=null;
-		boolean result=false;
-		int cnt=0;
-		
-		try {
-			session= factory.openSession();
-			BookMapper mapper= session.getMapper(BookMapper.class);
-			cnt= mapper.updateReserve(bookrental_id, user_id);
 			if(cnt>0) {
 				result=true;
 			}
@@ -349,6 +261,52 @@ public class BookDao {
 			if(session!=null)session.close();
 		}
 		return result;		
+	}
+	
+	public boolean updateBook(String book_id) {
+		SqlSession session=null;
+		boolean result=false;
+		int cnt=0;
+		
+		try {
+			session= factory.openSession();
+			BookMapper mapper= session.getMapper(BookMapper.class);
+			cnt= mapper.updateBook(book_id);
+			if(cnt>0) {
+				result=true;
+			}
+			session.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null)session.close();
+		}
+		return result;		
+		
+	}
+	
+	public boolean removeRentalID(String bookrental_id) {
+		SqlSession session=null;
+		boolean result=false;
+		int cnt=0;
+		
+		try {
+			session= factory.openSession();
+			BookMapper mapper= session.getMapper(BookMapper.class);
+			cnt= mapper.removeRentalID(bookrental_id);
+			if(cnt>0) {
+				result=true;
+			}
+			session.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null)session.close();
+		}
+		return result;		
+		
 	}
 
 }

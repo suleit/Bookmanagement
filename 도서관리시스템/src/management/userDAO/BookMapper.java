@@ -16,11 +16,6 @@ public interface BookMapper {
 	 */
 	public int updatehistoryOverdue();
 	/**
-	 * 렌탈테이블에 연체일 계산 
-	 * @return
-	 */
-	public int updateOverdue();
-	/**
 	 *  이용자 검색-로그인시 사용
 	 * @param id 값을 string으로 받아서 사용함
 	 * @return
@@ -74,13 +69,6 @@ public interface BookMapper {
 	 */
 	public ArrayList<Book> findBookForReturn(@Param("rental_name")String rental_name);
 	/**
-	 * 책 대여하기 jtable을 선택한 값에서 매개변수 따올것 
-	 * @param book_id
-	 * @param user_id
-	 * @return
-	 */
-	public int rentalBook(@Param("book_id") String book_id, @Param("user_id")String user_id);
-	/**
 	 * 책 대여 기록  테이블에 이력 남기기 jtable을 선택한 값에서 매개변수 따올것 
 	 * @param book_id
 	 * @param user_id
@@ -95,23 +83,26 @@ public interface BookMapper {
 	 */
 	public int updateReceiveDate(String bookrental_id);
 	/**
-	 * 대여기록 삭제 
-	 * @param bookrental_id
-	 * @return
-	 */
-	public int deleteBookRental(String bookrental_id);
-	
-	/**
-	 *  rental테이블에 예약자 아이디 업데이트하기 
-	 * @param bookrental_id
-	 * @return
-	 */
-	public int updateReserve(@Param("bookrental_id")String bookrental_id, @Param("user_id")String user_id);
-	/**
 	 * rentalhistory 테이블에 예약자 아이디 업데이트하기
 	 * @param bookrental_id
 	 * @param user_id
 	 * @return
 	 */
 	public int updateReserveHistory(@Param("bookrental_id")String bookrental_id, @Param("user_id")String user_id);
+	/**
+	 *  book 테이블에  해당 책 대여시 대여id 업데이트 
+	 * @param book_id
+	 * @return
+	 */
+	public int updateBook(String book_id);
+	/**
+	 *  book 테이블에 해당 책 반납시 대여 id null 값으로 삭제
+	 * @param bookrental_id
+	 * @return
+	 */
+	public int removeRentalID(String bookrental_id);
+	
+	
+
+
 }

@@ -14,11 +14,14 @@ import javax.swing.JTextField;
 
 import management.userDAO.BookDao;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import javax.swing.border.BevelBorder;
 
 public class InputRentalUser extends JFrame implements ActionListener {
 
@@ -39,6 +42,13 @@ public class InputRentalUser extends JFrame implements ActionListener {
 	 *            1이면 대여 0이면 예약-- if 문으로 해당 dao 메소드 호출할 것
 	 */
 	public InputRentalUser(String bookname, String id, int status) {
+		
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		this.status = status;
 		this.id = id;
 		setTitle("대여/예약자 정보 입력창");
@@ -63,11 +73,11 @@ public class InputRentalUser extends JFrame implements ActionListener {
 		getContentPane().add(p_input);
 
 		p_button = new JPanel();
+		p_button.setBorder(new LineBorder(new Color(0, 0, 0), 10));
 		p_button.setLayout(new BorderLayout(0, 0));
 		b_submit = new JButton("\uB300\uC5EC/\uC608\uC57D \uC2E0\uCCAD");
 		b_submit.setFont(new Font("굴림", Font.BOLD, 20));
-		b_submit.setBorder(new LineBorder(new Color(0, 0, 0), 4));
-		b_submit.setBorderPainted(false);
+		b_submit.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		p_button.add(b_submit);
 		b_submit.addActionListener(this);
 
@@ -77,36 +87,32 @@ public class InputRentalUser extends JFrame implements ActionListener {
 
 	}
 
-	public static void main(String[] args) {
-		new InputRentalUser("프로그래밍", "sul", 1);
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		boolean result = false;
 		boolean result2 = false;
 		String user_id = tf_input.getText();
-		
+
 		System.out.println(user_id);
 		System.out.println(id);
-		
+
 		if (status == 1) {// 1이면 대여
-			result = dao.rentalBook(id, user_id);
-			result2 = dao.rentalBookhistory(id, user_id);
+			result2 = dao.rentalBookhistory(id, user_id); // rental_id를 먼저 생성함 
+			result = dao.updateBook(id);
 		} else {
-			result = dao.updateReserve(id, user_id);
-			result2 = dao.updateReserveHistory(id, user_id);
+			result = dao.updateReserveHistory(id, user_id);
+			result2 = true;
 		}
-		
-		if(result&&result2) {   
+
+		if (result && result2) {
 			System.out.println(result);
 			System.out.println(result2);
-			JOptionPane.showMessageDialog(this,"대여/예약 신청이 완료되었습니다.");
+			JOptionPane.showMessageDialog(this, "대여/예약 신청이 완료되었습니다.");
 			dispose();
-		}else {
+		} else {
 			System.out.println(result);
 			System.out.println(result2);
-			JOptionPane.showMessageDialog(this,"대여/예약 신청 에러");
+			JOptionPane.showMessageDialog(this, "대여/예약 신청 에러");
 		}
 	}
 }
